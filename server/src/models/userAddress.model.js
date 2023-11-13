@@ -45,4 +45,4 @@ export const getAddressById=(userId)=>AddressModel.findById(userId);
 export const updateAddressById = (userId) => AddressModel.findByIdAndUpdate(userId);
 export const deleteAddressById = (userId) => AddressModel.findByIdAndDelete(userId);
 export const addAddress = (userId,name,street,city,district,location) =>
-  AddressModel.create(userId,name,street,city,district,location);
+AddressModel.create(userId,name,street,city,district,location);
