@@ -1,9 +1,9 @@
-import express, { Express } from 'express';
-import mongoose from 'mongoose';
-import cors from 'cors';
-import config from './config';
+const express = require('express');
+const mongoose = require('mongoose');
+const cors = require('cors');
+const config = require('./config');
 
-const app : Express = express();
+const app = express();
 
 app.use(cors());
 app.use(express.json());
