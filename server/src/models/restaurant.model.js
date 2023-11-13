@@ -1,37 +1,53 @@
 import { model, Schema } from 'mongoose';
 
-const restaurantSchema = new Schema({
+const RestaurantSchema = new Schema({
       name: {
             type: String,
             required: true,
       },
       address: {
-            type: String,
-            required: true,
-      },
-      location: {
-            lat: {
+            street: {
                   type: String,
                   required: true,
             },
-            lng: {
+            city: {
+                  type: String,
+                  required: true, 
+            },
+            district: {
                   type: String,
                   required: true,
             }
+            
       },
-      category: {
-            type: String,
+      location: {
+            lat: {
+                  type: Number,
+                  required: true,
+            },
+            lng: {
+                  type: Number,
+                  required: true,
+            }
+      },
+      categories: {
+            type: [{ type: Schema.ObjectId, ref: "category"}],
             required: true, 
       },
       ownerId: {
-            type: String,
+            type: Schema.ObjectId,
+            ref: 'user',
             required: false,
       },
-      foods: {
+      food: {
             type: [{ type: Schema.ObjectId, ref: "food"}],
             required: true,
+      },
+      peakTime: {
+            start: {type: Date},
+            end: {type: Date},
       }
 
 })
 
-export const RestauranntModel = model("Restaurant", restaurantSchema);
+export const RestaurantModel = model("restaurant", RestaurantSchema);
