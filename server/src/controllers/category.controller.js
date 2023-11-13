@@ -33,7 +33,7 @@ module.exports.getCategoryById = async (req, res) => {
 module.exports.updateCategoryById = async (req, res) => {
   try {
     const categoryId = req.params.id;
-    const updateData = req.body;
+
 
     const updatedCategory = await CategoryModel.findByIdAndUpdate(
       categoryId,

@@ -23,7 +23,7 @@ export const addAddress = async (req, res) => {
 
 export const updateAddressById = async (req, res) => {
     const userId = req.params.userId; 
-    const updatedData = req.body;
+    
 
     try {
         const updatedAddress = await AddressModel.findByIdAndUpdate(userId);
