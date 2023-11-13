@@ -1,5 +1,5 @@
 import { model, Schema } from 'mongoose';
-import { CategoryModel } from './category.model';
+
 
 const FoodSchema = new Schema({
    
@@ -44,3 +44,18 @@ const FoodSchema = new Schema({
 
 });
 export const FoodModel = model("food", FoodSchema);
+
+
+export const getAllFood = () => FoodModel.find();
+
+export const getFoodById = (_id) => FoodModel.findById(_id);
+
+export const updateFoodById = (_id) => FoodModel.findByIdAndUpdate(_id);
+
+export const deleteFoodById = (_id) => FoodModel.findByIdAndDelete(_id);
+
+
+
+export const addFood = (name,imageUrl,price,category,prepareTime,servingSize,packageSize) =>
+
+FoodModel.create(name,imageUrl,price,category,prepareTime,servingSize,packageSize);

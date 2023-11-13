@@ -48,3 +48,16 @@ const OrderSchema = new Schema ({
 })
 
 export const OrderModel = model("order", OrderSchema);
+
+
+
+export const createOrder = (userId, restaurantId, items, totalPrice, addressId, status) => 
+      OrderModel.create(userId, restaurantId, items, totalPrice, addressId, status);
+
+export const updateOrderbyUserId = (userId, values) => OrderModel.findByIdAndUpdate(userId, values);
+
+export const deleteOrderbyUserId = (userId) => OrderModel.findByIdANdDelete(userId);
+
+export const getAllOrders = () => OrderModel.find();
+
+

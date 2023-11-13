@@ -34,3 +34,21 @@ const UserSchema = new Schema({
 })
 
 export const UserModel = model("user", UserSchema);
+
+
+
+export const getUsers = () => UserModel.find();
+
+export const getUserByEmail = (email) => UserModel.findOne({ email });
+
+export const getUserBySessionToken = (sessionToken) =>
+  UserModel.findOne({
+    "authentication.sessionToken": sessionToken,
+  });
+
+export const getUserById = (id) => UserModel.findById(id);
+
+export const createUser = (name, email, password) => UserModel.create(name, email, password);
+  
+export const deleteUserById = (id) => UserModel.findOneAndDelete({ id });
+export const updateUserById = (id, values) => UserModel.findByIdAndUpdate(id, values);
