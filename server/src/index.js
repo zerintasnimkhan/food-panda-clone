@@ -2,11 +2,18 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const config = require('./config');
+//const bodyParser = require("body-parser");
+const categoryRouter = require('./routers/category.router');
+const orderRouter = require('./routers/order.router');
 
 const app = express();
 
 app.use(cors());
+//app.use(bodyParser);
 app.use(express.json());
+
+app.use('/category', categoryRouter);
+app.use('/order', orderRouter);
 
 (async function () {
       try {
@@ -17,3 +24,5 @@ app.use(express.json());
             console.log(error);
       }
 })();
+
+

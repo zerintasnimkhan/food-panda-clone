@@ -1,4 +1,4 @@
-import { model, Schema } from "mongoose";
+const { model, Schema } = require("mongoose");
 
 const AddressSchema = new Schema({
   userId: {
@@ -11,21 +11,15 @@ const AddressSchema = new Schema({
     required: true,
   },
 
-  street: { 
-    type: String, 
-    required: true 
+  street: {
+    type: String,
+    required: true,
   },
-  
-  city: 
-  { type: String, 
-    required: true 
-  },
-  
-  district: 
-  { type: String, 
-    required: true 
-  },
- 
+
+  city: { type: String, required: true },
+
+  district: { type: String, required: true },
+
   location: {
     lat: {
       type: Number,
@@ -38,11 +32,18 @@ const AddressSchema = new Schema({
   },
 });
 
-export const AddressModel = model("address", AddressSchema);
+const AddressModel = model("address", AddressSchema);
 
-export const getAllAddress = () => AddressModel.find();
-export const getAddressById=(userId)=>AddressModel.findById(userId);
-export const updateAddressById = (userId) => AddressModel.findByIdAndUpdate(userId);
-export const deleteAddressById = (userId) => AddressModel.findByIdAndDelete(userId);
-export const addAddress = (userId,name,street,city,district,location) =>
-AddressModel.create(userId,name,street,city,district,location);
+module.exports.getAllAddress = () => AddressModel.find();
+module.exports.getAddressByUserId = (userId) => AddressModel.find({ userId });
+module.exports.updateAddressById = (id, data) =>
+  AddressModel.findByIdAndUpdate(id, { $set: data });
+module.exports.deleteAddressById = (id) => AddressModel.findByIdAndDelete(id);
+module.exports.addAddress = ({
+  userId,
+  name,
+  street,
+  city,
+  district,
+  location,
+}) => AddressModel.create({ userId, name, street, city, district, location });
