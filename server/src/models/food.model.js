@@ -7,7 +7,6 @@ const FoodSchema = new Schema({
   },
   imageUrl: {
     type: String,
-    required: true,
   },
   price: {
     type: Number,
@@ -26,22 +25,22 @@ const FoodSchema = new Schema({
   prepareTime: {
     peakTime: {
       type: Number,
-      required: true,
+      //required: true,
     },
     normalTime: {
       type: Number,
-      required: true,
+      //required: true,
     },
   },
 
   servingSize: {
     type: String,
-    required: true,
+    //required: true,
   },
 
   packageSize: { 
     type: String, 
-    required: true 
+    //required: true 
     },
 });
 const FoodModel = model("food", FoodSchema);

@@ -1,4 +1,4 @@
-const FoodModel = require("../models/food.model");
+const { addFood } = require("../models/food.model");
 
 module.exports.getAllFood = async (req, res) => {
   try {
@@ -49,27 +49,22 @@ module.exports.deleteFoodById = async (req, res) => {
 };
 
 
-module.exports.addFood = async (req, res) => {
+module.exports.createFood = async (req, res) => {
   try {
-    const {
+    const { name, imageUrl, price, category, prepareTime, servingSize, packageSize } = req.body;
+
+    if (!name || !price || !category) {
+      return res.status(400).json();
+    }
+    const data = (
       name,
       imageUrl,
       price,
       category,
       prepareTime,
       servingSize,
-      packageSize,
-    } = req.body;
-    const newFood = new FoodModel({
-      name,
-      imageUrl,
-      price,
-      category,
-      prepareTime,
-      servingSize,
-      packageSize,
-    });
-    const savedFood = await newFood.save();
+      packageSize );
+    const savedFood = await addFood(data);
     res.status(201).json({ message: "Food added", food: savedFood });
   } catch (error) {
     res.status(500).json({ error: "Server error" });
