@@ -1,16 +1,17 @@
-const CategoryModel = require("../models/category.model");
+const { addCategory } = require("../models/category.model");
 
-module.exports.addCategory = async (req, res) => {
+module.exports.createCategory = async (req, res) => {
   try {
     const { name, imageUrl } = req.body;
 
     if (!name) {
       return res.status(400).json();
     }
-    const newCategory = new CategoryModel({ name, imageUrl });
-    await newCategory.save();
-    return res.status(201).json({ message: 'Category added successfully', category: newCategory });
- 
+    const data = { name, imageUrl };
+    const newCategory = await addCategory(data);
+    return res
+      .status(201)
+      .json({ message: "Category added successfully", category: newCategory });
   } catch (error) {
     res.status(500).json({ error: "Server error" });
   }
@@ -38,10 +39,7 @@ module.exports.updateCategoryById = async (req, res) => {
   try {
     const categoryId = req.params.id;
 
-
-    const updatedCategory = await CategoryModel.findByIdAndUpdate(
-      categoryId,
-    );
+    const updatedCategory = await CategoryModel.findByIdAndUpdate(categoryId);
 
     if (!updatedCategory) {
       return res.status(404).json({ error: "Category not found" });
@@ -55,17 +53,15 @@ module.exports.updateCategoryById = async (req, res) => {
 };
 
 module.exports.deleteCategoryById = async (req, res) => {
-
-    try{
-        const categoryId = req.params.id;
-        const deletedCategory = await CategoryModel.findByIdAndDelete(categoryId);
-        if(!deletedCategory){
-            return res.status(404).json({error:"Category not found"});
-        }
-        return res.json(deletedCategory);
+  try {
+    const categoryId = req.params.id;
+    const deletedCategory = await CategoryModel.findByIdAndDelete(categoryId);
+    if (!deletedCategory) {
+      return res.status(404).json({ error: "Category not found" });
     }
-    catch(error){
-        console.error(error);
-        return res.status(500).json({error:"Internal Server Error"});
-    }
-}
+    return res.json(deletedCategory);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
+};
