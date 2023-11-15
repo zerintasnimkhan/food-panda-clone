@@ -75,7 +75,7 @@ async function register(req, res) {
   }
 }
 
-async function registerRestaurent (req, res) {
+async function registerRestaurant (req, res) {
   try {
     const { name, email, password,type } = req.body;
     if (!name|| !email || !password || type) {
@@ -102,4 +102,4 @@ async function registerRestaurent (req, res) {
     console.log(error);
   }
 }
-module.exports = { register, login, registerRestaurent};
+module.exports = { register, login, registerRestaurant};

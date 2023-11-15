@@ -5,6 +5,7 @@ const config = require('./config');
 const Router = require('./routers/router');
 const loginrouter = require('./routers/router');
 const registerrouter = require('./routers/router');
+const registerRestaurant=require('./routers/router')
 
 const app = express();
 
@@ -15,6 +16,7 @@ app.use('/', Router);
 
 app.use('/login', loginrouter);
 app.use('/register', registerrouter);
+app.use('/resisterRestaurant',registerRestaurant)
 
 
 (async function () {
