@@ -1,8 +1,8 @@
-const FoodModel = require("../models/food.model");
+const { addFood, getAllFood } = require("../models/food.model");
 
-module.exports.getAllFood = async (req, res) => {
+module.exports.fetchAllFood = async (_req, res) => {
   try {
-    const food = await FoodModel.find({});
+    const food = await getAllFood();
     res.status(200).json(food);
   } catch (error) {
     res.status(500).json({ error: "Server error" });
@@ -48,9 +48,9 @@ module.exports.deleteFoodById = async (req, res) => {
   }
 };
 
-
-module.exports.addFood = async (req, res) => {
+module.exports.createFood = async (req, res) => {
   try {
+    console.log(req.body);
     const {
       name,
       imageUrl,
@@ -60,7 +60,18 @@ module.exports.addFood = async (req, res) => {
       servingSize,
       packageSize,
     } = req.body;
-    const newFood = new FoodModel({
+
+    if (
+      !name ||
+      !price ||
+      !category ||
+      !prepareTime ||
+      !servingSize ||
+      !packageSize
+    ) {
+      return res.status(400).json();
+    }
+    const data = {
       name,
       imageUrl,
       price,
@@ -68,10 +79,16 @@ module.exports.addFood = async (req, res) => {
       prepareTime,
       servingSize,
       packageSize,
-    });
-    const savedFood = await newFood.save();
+    };
+ 
+    const savedFood = await addFood(data);
+
     res.status(201).json({ message: "Food added", food: savedFood });
   } catch (error) {
+    console.error(error);
+    if (error.name === "ValidationError") {
+      return res.status(400).json({ error: error.message });
+    }
     res.status(500).json({ error: "Server error" });
   }
 };

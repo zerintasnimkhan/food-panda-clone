@@ -5,6 +5,8 @@ const config = require('./config');
 //const bodyParser = require("body-parser");
 const categoryRouter = require('./routers/category.router');
 const orderRouter = require('./routers/order.router');
+const restaurantRouter = require('./routers/restaurant.router');
+const foodRouter = require('./routers/food.router')
 
 const app = express();
 
@@ -14,6 +16,8 @@ app.use(express.json());
 
 app.use('/category', categoryRouter);
 app.use('/order', orderRouter);
+app.use('/restaurant', restaurantRouter);
+app.use('/food', foodRouter);
 
 (async function () {
       try {

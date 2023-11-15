@@ -1,71 +1,92 @@
-const CategoryModel = require("../models/category.model");
+const {
+  addCategory,
+  getAllCategory,
+  getCategoryById,
+  deleteCategoryById,
+  updateCategoryById,
+} = require("../models/category.model");
+const mongoose = require("mongoose");
 
-module.exports.addCategory = async (req, res) => {
+module.exports.createCategory = async (req, res) => {
   try {
     const { name, imageUrl } = req.body;
 
     if (!name) {
       return res.status(400).json();
     }
-    const newCategory = new CategoryModel({ name, imageUrl });
-    await newCategory.save();
-    return res.status(201).json({ message: 'Category added successfully', category: newCategory });
- 
+    const data = { name, imageUrl };
+    const newCategory = await addCategory(data);
+    return res
+      .status(201)
+      .json({ message: "Category added successfully", category: newCategory });
   } catch (error) {
-    res.status(500).json({ error: "Server error" });
+    if (
+      error.code === 11000 &&
+      error.keyPattern &&
+      error.keyPattern.name === 1
+    ) {
+      // Handle duplicate key error for the 'name' field
+      return res
+        .status(400)
+        .json({ error: "Duplicate key error for name field" });
+      // Handle accordingly (e.g., return an error response)
+    } else {
+      // Handle other errors
+      return res.status(500).json({ error: "Unexpected error" });
+      // Handle accordingly (e.g., return an error response)
+    }
   }
 };
 
-module.exports.getAllCategory = async (req, res) => {
+module.exports.fetchAllCategory = async (_req, res) => {
   try {
-    const categories = await CategoryModel.find({});
+    const categories = await getAllCategory();
     res.status(200).json(categories);
   } catch (error) {
     res.status(500).json({ error: "Server error" });
   }
 };
 
-module.exports.getCategoryById = async (req, res) => {
+module.exports.fetchCategoryById = async (req, res) => {
   try {
-    const category = await CategoryModel.findById(req.params.id);
+    const category = await getCategoryById(req.params.id);
     res.status(200).json(category);
   } catch (error) {
     res.status(500).json({ error: "Server error" });
   }
 };
 
-module.exports.updateCategoryById = async (req, res) => {
+module.exports.updateCategory = async (req, res) => {
   try {
-    const categoryId = req.params.id;
-
-
-    const updatedCategory = await CategoryModel.findByIdAndUpdate(
-      categoryId,
-    );
+    const updatedata = { name: 'New Name', imageUrl: 'new-image.jpg'};
+    const updatedCategory = await updateCategoryById(req.params.id, updatedata);
 
     if (!updatedCategory) {
-      return res.status(404).json({ error: "Category not found" });
+      return rs.status(404).json({ errror: "Category not found" });
     }
+    res.status(200).json(updatedCategory);
+  } catch (error) {
+    console.error(error);
+    if (error.name === "ValidationError") {
+      return res.status(400).json({ error: error.message });
+    }
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
 
-    return res.json(updatedCategory);
+module.exports.removeCategory = async (req, res) => {
+  try {
+    const categoryId = req.params.id;
+    console.log(categoryId);
+    const category = await getCategoryById(categoryId);
+    console.log(category);
+    if (!category) {
+      return res.status(404).json({ msg: "No category found." });
+    }
+    await deleteCategoryById(categoryId);
+    return res.status(204).json({ msg: "success" });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ error: "Internal Server Error" });
   }
 };
-
-module.exports.deleteCategoryById = async (req, res) => {
-
-    try{
-        const categoryId = req.params.id;
-        const deletedCategory = await CategoryModel.findByIdAndDelete(categoryId);
-        if(!deletedCategory){
-            return res.status(404).json({error:"Category not found"});
-        }
-        return res.json(deletedCategory);
-    }
-    catch(error){
-        console.error(error);
-        return res.status(500).json({error:"Internal Server Error"});
-    }
-}
