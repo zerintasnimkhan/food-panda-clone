@@ -54,9 +54,11 @@ const RestaurantModel = model("restaurant", RestaurantSchema);
 
 
 
-module.exports.getAllRestaurant = () => RestaurantModel.find();
+module.exports.getAllRestaurants = () => RestaurantModel.find();
+
+module.exports.getRestaurantById = (id) => RestaurantModel.findById(id);
 
 module.exports.getRestaurantByCategory = (category) => RestaurantModel.find({ category });
 
-module.exports.addRestaurants = ({name, address, location, categories, ownerId, food, peakTime}) => 
+module.exports.addRestaurant = ({name, address, location, categories, ownerId, food, peakTime}) => 
 RestaurantModel.create({name, address, location, categories, ownerId, food, peakTime});
