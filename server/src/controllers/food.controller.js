@@ -1,4 +1,10 @@
-const { addFood, getAllFood } = require("../models/food.model");
+const {
+  addFood,
+  getAllFood,
+  deleteFoodById,
+  getFoodById,
+  updateFoodById,
+} = require("../models/food.model");
 
 module.exports.fetchAllFood = async (_req, res) => {
   try {
@@ -9,39 +15,45 @@ module.exports.fetchAllFood = async (_req, res) => {
   }
 };
 
-module.exports.getFoodById = async (req, res) => {
+module.exports.fetchFoodById = async (req, res) => {
   try {
-    const food = await FoodModel.findById(req.params.id);
+    const food = await getFoodById(req.params.id);
     res.status(200).json(food);
   } catch (error) {
     res.status(500).json({ error: "Server error" });
   }
 };
 
-module.exports.updateFoodById = async (req, res) => {
+module.exports.updateById = async (req, res) => {
   try {
     const foodId = req.params.id;
-
-    const updatedFood = await FoodModel.findByIdAndUpdate(foodId);
-
-    if (!updatedFood) {
-      return res.status(404).json({ error: "Food not found" });
+    const food = await getFoodById(foodId);
+    if (!food) {
+      return rs.status(404).json({ errror: "Food not found" });
     }
 
-    return res.json(updatedFood);
+    const updatedata = req.body;
+    const updatedFood = await updateFoodById(req.params.id, updatedata);
+
+    res.status(200).json(updatedFood);
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ error: "Internal Server Error" });
+    if (error.name === "ValidationError") {
+      return res.status(400).json({ error: error.message });
+    }
+    res.status(500).json({ error: "Internal Server Error" });
   }
 };
-module.exports.deleteFoodById = async (req, res) => {
+
+module.exports.removeFoodById = async (req, res) => {
   try {
     const foodId = req.params.id;
-    const deletedFood = await FoodModel.findByIdAndDelete(foodId);
-    if (!deletedFood) {
-      return res.status(404).json({ error: "Food not found" });
+    const food = await getFoodById(foodId);
+    if (!food) {
+      return res.status(404).json({ msg: "No food found." });
     }
-    return res.json(deletedFood);
+    await deleteFoodById(foodId);
+    return res.status(204).json({ msg: "success" });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ error: "Internal Server Error" });
@@ -80,7 +92,7 @@ module.exports.createFood = async (req, res) => {
       servingSize,
       packageSize,
     };
- 
+
     const savedFood = await addFood(data);
 
     res.status(201).json({ message: "Food added", food: savedFood });
@@ -92,3 +104,6 @@ module.exports.createFood = async (req, res) => {
     res.status(500).json({ error: "Server error" });
   }
 };
+
+
+

@@ -47,11 +47,15 @@ const FoodModel = model("food", FoodSchema);
 
 module.exports.getAllFood = () => FoodModel.find();
 
-module.exports.getFoodById = (_id) => FoodModel.findById(_id);
+module.exports.getFoodById = (id) => FoodModel.findById(id);
 
-module.exports.updateFoodById = (_id) => FoodModel.findByIdAndUpdate(_id);
+module.exports.updateFoodById = (id, updatedata) =>
+  FoodModel.findByIdAndUpdate(id, updatedata, {
+    new: true,
+    runValidators: true,
+  });
 
-module.exports.deleteFoodById = (_id) => FoodModel.findByIdAndDelete(_id);
+module.exports.deleteFoodById = (id) => FoodModel.findByIdAndDelete(id);
 
 module.exports.addFood = ({
   name,

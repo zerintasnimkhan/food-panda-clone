@@ -11,25 +11,27 @@ const OrderSchema = new Schema({
     ref: "restaurant",
     required: true,
   },
-  items: {
-    foodId: {
-      type: Schema.ObjectId,
-      ref: "food",
-      required: true,
+  items: [
+    {
+      foodId: {
+        type: Schema.ObjectId,
+        ref: "food",
+        required: true,
+      },
+      quantity: {
+        type: Number,
+        required: true,
+      },
+      note: {
+        type: String,
+        required: false,
+      },
+      price: {
+        type: Number,
+        required: true,
+      },
     },
-    Quantity: {
-      type: Number,
-      required: true,
-    },
-    note: {
-      type: String,
-      required: false,
-    },
-    price: {
-      type: Number,
-      required: true,
-    },
-  },
+  ],
   totalPrice: {
     type: Number,
     required: true,
@@ -48,23 +50,30 @@ const OrderSchema = new Schema({
 
 const OrderModel = model("order", OrderSchema);
 
-module.exports.createOrder = (
-{  userId,
+module.exports.addOrder = ({
+  userId,
   restaurantId,
   items,
   totalPrice,
   addressId,
-  status}
-) =>
-  OrderModel.create({userId, restaurantId, items, totalPrice, addressId, status});
+  status,
+}) =>
+  OrderModel.create({
+    userId,
+    restaurantId,
+    items,
+    totalPrice,
+    addressId,
+    status,
+  });
 
 module.exports.updateOrderbyId = (id, values) =>
-  OrderModel.findByIdAndUpdate(id, {$set: values});
+  OrderModel.findByIdAndUpdate(id, { $set: values });
 
-module.exports.deleteOrderbyUserId = (d) =>
-  OrderModel.findByIdAndDelete(d);
+module.exports.deleteOrderbyUserId = (d) => OrderModel.findByIdAndDelete(d);
 
 module.exports.getAllOrders = () => OrderModel.find();
 
-module.exports.getAllOrdersForRestaurant = (restaurantId) => OrderModel.find({ restaurantId });
+module.exports.getAllOrdersForRestaurant = (restaurantId) =>
+  OrderModel.find({ restaurantId });
 module.exports.getAllOrdersForUser = (userId) => OrderModel.find({ userId });
