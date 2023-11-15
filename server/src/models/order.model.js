@@ -70,10 +70,14 @@ module.exports.addOrder = ({
 module.exports.updateOrderbyId = (id, values) =>
   OrderModel.findByIdAndUpdate(id, { $set: values });
 
-module.exports.deleteOrderbyUserId = (d) => OrderModel.findByIdAndDelete(d);
+//module.exports.deleteOrderbyId = (id) => OrderModel.findByIdAndDelete(id);
 
 module.exports.getAllOrders = () => OrderModel.find();
+
+module.exports.getOrderById = (id) => OrderModel.findById(id);
 
 module.exports.getAllOrdersForRestaurant = (restaurantId) =>
   OrderModel.find({ restaurantId });
 module.exports.getAllOrdersForUser = (userId) => OrderModel.find({ userId });
+
+module.exports.deleteOrderById = (id) => OrderModel.findByIdAndDelete(id);

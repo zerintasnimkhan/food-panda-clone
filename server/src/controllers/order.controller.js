@@ -1,4 +1,10 @@
-const { addOrder, getAllOrders } = require("../models/order.model");
+const {
+  addOrder,
+  getAllOrders,
+  getOrderById,
+  updateOrderbyId,
+  deleteOrderById
+} = require("../models/order.model");
 
 module.exports.createOrder = async (req, res) => {
   try {
@@ -38,7 +44,6 @@ module.exports.createOrder = async (req, res) => {
   }
 };
 
-
 module.exports.fetchAllOrders = async (_req, res) => {
   try {
     const categories = await getAllOrders();
@@ -50,22 +55,22 @@ module.exports.fetchAllOrders = async (_req, res) => {
 
 module.exports.fetchOrderById = async (req, res) => {
   try {
-    const category = await getOrderById(req.params.id);
-    res.status(200).json(category);
+    const order = await getOrderById(req.params.id);
+    res.status(200).json(order);
   } catch (error) {
     res.status(500).json({ error: "Server error" });
   }
 };
 
-module.exports.updateCategory = async (req, res) => {
+module.exports.updateOrder = async (req, res) => {
   try {
-    const updatedata = { name: 'New Name', imageUrl: 'new-image.jpg'};
-    const updatedCategory = await updateCategoryById(req.params.id, updatedata);
+    const updatedata = req.body;
+    const updatedOrder = await updateOrderbyId(req.params.id, updatedata);
 
-    if (!updatedCategory) {
-      return rs.status(404).json({ errror: "Category not found" });
+    if (!updatedOrder) {
+      return rs.status(404).json({ errror: "Order not found" });
     }
-    res.status(200).json(updatedCategory);
+    res.status(200).json(updatedOrder);
   } catch (error) {
     console.error(error);
     if (error.name === "ValidationError") {
@@ -75,20 +80,17 @@ module.exports.updateCategory = async (req, res) => {
   }
 };
 
-module.exports.removeCategory = async (req, res) => {
+module.exports.removeOrder = async (req, res) => {
   try {
-    const categoryId = req.params.id;
-    console.log(categoryId);
-    const category = await getCategoryById(categoryId);
-    console.log(category);
-    if (!category) {
-      return res.status(404).json({ msg: "No category found." });
+    const orderId = req.params.id;
+    const order = await getOrderById(orderId);
+    if (!order) {
+      return res.status(404).json({ msg: "No order found." });
     }
-    await deleteCategoryById(categoryId);
+    await deleteOrderById(orderId);
     return res.status(204).json({ msg: "success" });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ error: "Internal Server Error" });
   }
 };
-
