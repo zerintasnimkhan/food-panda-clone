@@ -1,4 +1,4 @@
-import { model, Schema } from 'mongoose';
+const { Schema, model } = require('mongoose');
 
 const OrderSchema = new Schema ({
       userId: {
@@ -47,17 +47,17 @@ const OrderSchema = new Schema ({
 
 })
 
-export const OrderModel = model("order", OrderSchema);
+ const OrderModel = model("order", OrderSchema);
 
 
 
-export const createOrder = (userId, restaurantId, items, totalPrice, addressId, status) => 
+module.exports. createOrder = (userId, restaurantId, items, totalPrice, addressId, status) => 
       OrderModel.create(userId, restaurantId, items, totalPrice, addressId, status);
 
-export const updateOrderbyUserId = (userId, values) => OrderModel.findByIdAndUpdate(userId, values);
+module.exports. updateOrderbyUserId = (userId, values) => OrderModel.findByIdAndUpdate(userId, values);
 
-export const deleteOrderbyUserId = (userId) => OrderModel.findByIdANdDelete(userId);
+module.exports.deleteOrderbyUserId = (userId) => OrderModel.findByIdANdDelete(userId);
 
-export const getAllOrders = () => OrderModel.find();
+module.exports. getAllOrders = () => OrderModel.find();
 
 

@@ -1,4 +1,4 @@
-import { model, Schema } from 'mongoose';
+const { Schema, model } = require('mongoose');
 
 
 const FoodSchema = new Schema({
@@ -43,19 +43,19 @@ const FoodSchema = new Schema({
     
 
 });
-export const FoodModel = model("food", FoodSchema);
+ const FoodModel = model("food", FoodSchema);
 
 
-export const getAllFood = () => FoodModel.find();
+module.exports.getAllFood = () => FoodModel.find();
 
-export const getFoodById = (_id) => FoodModel.findById(_id);
+module.exports. getFoodById = (_id) => FoodModel.findById(_id);
 
-export const updateFoodById = (_id) => FoodModel.findByIdAndUpdate(_id);
+module.exports. updateFoodById = (_id) => FoodModel.findByIdAndUpdate(_id);
 
-export const deleteFoodById = (_id) => FoodModel.findByIdAndDelete(_id);
+module.exports.deleteFoodById = (_id) => FoodModel.findByIdAndDelete(_id);
 
 
 
-export const addFood = (name,imageUrl,price,category,prepareTime,servingSize,packageSize) =>
+module.exports.addFood = (name,imageUrl,price,category,prepareTime,servingSize,packageSize) =>
 
 FoodModel.create(name,imageUrl,price,category,prepareTime,servingSize,packageSize);

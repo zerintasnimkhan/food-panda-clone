@@ -1,4 +1,4 @@
-import {model,Schema} from 'mongoose';
+const { Schema, model } = require('mongoose');
 
 const CategorySchema = new Schema({
     name:{
@@ -9,20 +9,20 @@ const CategorySchema = new Schema({
         type:String
     }  
 })
-export const CategoryModel = model("category", CategorySchema);
+const CategoryModel = model("category", CategorySchema);
 
 
 
 
-export const getAllCategory = () => CategoryModel.find();
+module.exports.getAllCategory = () => CategoryModel.find();
 
-export const getCategoryById = (_id) => CategoryModel.findById(_id);
+module.exports. getCategoryById = (_id) => CategoryModel.findById(_id);
 
-export const updateCategoryById = (_id) => CategoryModel.findByIdAndUpdate(_id);
+module.exports. updateCategoryById = (_id) => CategoryModel.findByIdAndUpdate(_id);
 
-export const deleteCategoryById = (_id) => CategoryModel.findByIdAndDelete(_id);
+module.exports.deleteCategoryById = (_id) => CategoryModel.findByIdAndDelete(_id);
+module.exports. addCategory = (name,imageUrl) => 
 
-export const addCategory = (name,imageUrl) => 
 CategoryModel.create(name,imageUrl);
 
 

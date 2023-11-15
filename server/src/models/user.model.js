@@ -1,54 +1,39 @@
-import { model, Schema } from "mongoose";
+const { Schema, model } = require("mongoose");
 
 const UserSchema = new Schema({
-      name: {
-            type: String,
-            required: true,
-      },
-      email: {
-            type: String,
-            required: true,
-      },
-      type: {
-            type: String,
-            required: false,
-            enum: ['customer', 'restaurant'],
-            default: 'customer',
-      },
-      authentication: {
-            password: {
-                  type: String,
-                  required: true,
-                  select: false,
-            },
-            salt: {
-                  type: String,
-                  required: false,
-            },
-            sessionToken: {
-                  type: String,
-                  select: false,
-            },
-      }
+  name: {
+    type: String,
+    required: true,
+  },
+  email: {
+    type: String,
+    required: true,
+  },
+  type: {
+    type: String,
+    required: false,
+    enum: ["customer", "restaurant"],
+    default: "customer",
+  },
 
-})
+  password: {
+    type: String,
+    required: true,
+    select: false,
+  },
+});
 
-export const UserModel = model("user", UserSchema);
+const UserModel = model("user", UserSchema);
 
+module.exports.getUsers = () => UserModel.find();
 
+module.exports.getUserByEmail = (email) => UserModel.findOne({ email });
 
-export const getUsers = () => UserModel.find();
+module.exports.getUserById = (id) => UserModel.findById(id);
 
-export const getUserByEmail = (email) => UserModel.findOne({ email });
+module.exports.createUser = (name, email, password, type) =>
+  UserModel.create({name, email, password, type});
 
-export const getUserBySessionToken = (sessionToken) =>
-  UserModel.findOne({
-    "authentication.sessionToken": sessionToken,
-  });
-
-export const getUserById = (id) => UserModel.findById(id);
-
-export const createUser = (name, email, password) => UserModel.create(name, email, password);
-  
-export const deleteUserById = (id) => UserModel.findOneAndDelete({ id });
-export const updateUserById = (id, values) => UserModel.findByIdAndUpdate(id, values);
+module.exports.deleteUserById = (id) => UserModel.findOneAndDelete({ id });
+module.exports.updateUserById = (id, values) =>
+  UserModel.findByIdAndUpdate(id, values);
