@@ -3,8 +3,9 @@ const {
   getAllCategory,
   getCategoryById,
   deleteCategoryById,
-  updateCategoryById
+  updateCategoryById,
 } = require("../models/category.model");
+const mongoose = require("mongoose");
 
 module.exports.createCategory = async (req, res) => {
   try {
@@ -57,18 +58,19 @@ module.exports.fetchCategoryById = async (req, res) => {
 
 module.exports.updateCategory = async (req, res) => {
   try {
-    const categoryId = req.params.id;
-
-    const updatedCategory = await updateCategoryById(categoryId);
+    const updatedata = { name: 'New Name', imageUrl: 'new-image.jpg'};
+    const updatedCategory = await updateCategoryById(req.params.id, updatedata);
 
     if (!updatedCategory) {
-      return res.status(404).json({ error: "Category not found" });
+      return rs.status(404).json({ errror: "Category not found" });
     }
-
-    return res.json(updatedCategory);
+    res.status(200).json(updatedCategory);
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ error: "Internal Server Error" });
+    if (error.name === "ValidationError") {
+      return res.status(400).json({ error: error.message });
+    }
+    res.status(500).json({ error: "Internal Server Error" });
   }
 };
 
@@ -82,7 +84,7 @@ module.exports.removeCategory = async (req, res) => {
       return res.status(404).json({ msg: "No category found." });
     }
     await deleteCategoryById(categoryId);
-    return res.status(204).json({msg: 'success'});
+    return res.status(204).json({ msg: "success" });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ error: "Internal Server Error" });

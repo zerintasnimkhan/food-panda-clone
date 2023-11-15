@@ -16,7 +16,11 @@ module.exports.getAllCategory = () => CategoryModel.find();
 
 module.exports.getCategoryById = (id) => CategoryModel.findById(id);
 
-module.exports.updateCategoryById = (id) => CategoryModel.findOneAndRemove(id);
+module.exports.updateCategoryById = (id, updatedata) =>
+  CategoryModel.findByIdAndUpdate(id, updatedata, {
+    new: true,
+    runValidators: true,
+  });
 
 module.exports.deleteCategoryById = (id) => CategoryModel.findByIdAndDelete(id);
 
