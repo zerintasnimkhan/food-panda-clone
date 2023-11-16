@@ -1,4 +1,10 @@
-const { addRestaurant, getAllRestaurants, getRestaurantById } = require("../models/restaurant.model");
+const {
+  addRestaurant,
+  getAllRestaurants,
+  getRestaurantById,
+  updateRestaurantById,
+  deleteRestaurantById
+} = require("../models/restaurant.model");
 
 module.exports.createRestaurant = async (req, res) => {
   try {
@@ -23,7 +29,9 @@ module.exports.createRestaurant = async (req, res) => {
 
     const savedRestaurant = await addRestaurant(data);
 
-    res.status(201).json({ message: "Restaurant added", restaurant: savedRestaurant });
+    res
+      .status(201)
+      .json({ message: "Restaurant added", restaurant: savedRestaurant });
   } catch (error) {
     console.error(error);
     if (error.name === "ValidationError") {
@@ -51,15 +59,21 @@ module.exports.fetchRestaurantById = async (req, res) => {
   }
 };
 
-module.exports.updateOrder = async (req, res) => {
+module.exports.updateById = async (req, res) => {
   try {
-    const updatedata = req.body;
-    const updatedOrder = await updateOrderbyId(req.params.id, updatedata);
-
-    if (!updatedOrder) {
-      return rs.status(404).json({ errror: "Order not found" });
+    const restaurantId = req.params.id;
+    const food = await getRestaurantById(restaurantId);
+    if (!food) {
+      return res.status(404).json({ errror: "Restaurant not found" });
     }
-    res.status(200).json(updatedOrder);
+
+    const updatedata = req.body;
+    const updatedRestaurant = await updateRestaurantById(
+      req.params.id,
+      updatedata
+    );
+
+    res.status(200).json(updatedRestaurant);
   } catch (error) {
     console.error(error);
     if (error.name === "ValidationError") {
@@ -69,14 +83,14 @@ module.exports.updateOrder = async (req, res) => {
   }
 };
 
-module.exports.removeOrder = async (req, res) => {
+module.exports.removeRestaurant = async (req, res) => {
   try {
-    const orderId = req.params.id;
-    const order = await getOrderById(orderId);
-    if (!order) {
-      return res.status(404).json({ msg: "No order found." });
+    const restaurantId = req.params.id;
+    const restaurant = await getRestaurantById(restaurantId);
+    if (!restaurant) {
+      return res.status(404).json({ msg: "No restaurant found." });
     }
-    await deleteOrderById(orderId);
+    await deleteRestaurantById(restaurantId);
     return res.status(204).json({ msg: "success" });
   } catch (error) {
     console.error(error);

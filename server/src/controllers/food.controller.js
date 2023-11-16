@@ -29,7 +29,7 @@ module.exports.updateById = async (req, res) => {
     const foodId = req.params.id;
     const food = await getFoodById(foodId);
     if (!food) {
-      return rs.status(404).json({ errror: "Food not found" });
+      return res.status(404).json({ errror: "Food not found" });
     }
 
     const updatedata = req.body;
@@ -104,6 +104,3 @@ module.exports.createFood = async (req, res) => {
     res.status(500).json({ error: "Server error" });
   }
 };
-
-
-

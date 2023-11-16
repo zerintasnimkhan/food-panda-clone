@@ -3,7 +3,7 @@ const {
   getAllOrders,
   getOrderById,
   updateOrderbyId,
-  deleteOrderById
+  deleteOrderById,
 } = require("../models/order.model");
 
 module.exports.createOrder = async (req, res) => {
@@ -68,7 +68,7 @@ module.exports.updateOrder = async (req, res) => {
     const updatedOrder = await updateOrderbyId(req.params.id, updatedata);
 
     if (!updatedOrder) {
-      return rs.status(404).json({ errror: "Order not found" });
+      return res.status(404).json({ errror: "Order not found" });
     }
     res.status(200).json(updatedOrder);
   } catch (error) {

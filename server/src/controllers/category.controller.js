@@ -58,11 +58,11 @@ module.exports.fetchCategoryById = async (req, res) => {
 
 module.exports.updateCategory = async (req, res) => {
   try {
-    const updatedata = { name: 'New Name', imageUrl: 'new-image.jpg'};
+    const updatedata = { name: "New Name", imageUrl: "new-image.jpg" };
     const updatedCategory = await updateCategoryById(req.params.id, updatedata);
 
     if (!updatedCategory) {
-      return rs.status(404).json({ errror: "Category not found" });
+      return res.status(404).json({ errror: "Category not found" });
     }
     res.status(200).json(updatedCategory);
   } catch (error) {
