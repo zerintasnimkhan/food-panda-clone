@@ -1,4 +1,4 @@
-const {model,Schema} = require('mongoose');
+const { Schema, model } = require("mongoose");
 
 const UserSchema = new Schema({
   name: {
@@ -15,9 +15,11 @@ const UserSchema = new Schema({
     enum: ["customer", "restaurant"],
     default: "customer",
   },
+
   password: {
     type: String,
     required: true,
+    select: false,
   },
 });
 
@@ -29,7 +31,7 @@ module.exports.getUserByEmail = (email) => UserModel.findOne({ email });
 
 module.exports.getUserById = (id) => UserModel.findById(id);
 
-module.exports.createUser = ({name, email, password, type}) =>
+module.exports.createUser = (name, email, password, type) =>
   UserModel.create({name, email, password, type});
 
 module.exports.deleteUserById = (id) => UserModel.findOneAndDelete({ id });

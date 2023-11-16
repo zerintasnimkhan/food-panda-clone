@@ -1,4 +1,4 @@
-const { model, Schema } = require("mongoose");
+const { Schema, model } = require('mongoose');
 
 const AddressSchema = new Schema({
   userId: {
@@ -32,18 +32,11 @@ const AddressSchema = new Schema({
   },
 });
 
-const AddressModel = model("address", AddressSchema);
+ const AddressModel = model("address", AddressSchema);
 
 module.exports.getAllAddress = () => AddressModel.find();
-module.exports.getAddressByUserId = (userId) => AddressModel.find({ userId });
-module.exports.updateAddressById = (id, data) =>
-  AddressModel.findByIdAndUpdate(id, { $set: data });
-module.exports.deleteAddressById = (id) => AddressModel.findByIdAndDelete(id);
-module.exports.addAddress = ({
-  userId,
-  name,
-  street,
-  city,
-  district,
-  location,
-}) => AddressModel.create({ userId, name, street, city, district, location });
+module.exports.getAddressById=(userId)=>AddressModel.findById(userId);
+module.exports. updateAddressById = (userId) => AddressModel.findByIdAndUpdate(userId);
+module.exports. deleteAddressById = (userId) => AddressModel.findByIdAndDelete(userId);
+ addAddress = (userId,name,street,city,district,location) =>
+AddressModel.create(userId,name,street,city,district,location);

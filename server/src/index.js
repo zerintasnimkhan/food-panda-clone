@@ -7,12 +7,23 @@ const categoryRouter = require('./routers/category.router');
 const orderRouter = require('./routers/order.router');
 const restaurantRouter = require('./routers/restaurant.router');
 const foodRouter = require('./routers/food.router')
+const Router = require('./routers/router');
+const loginrouter = require('./routers/router');
+const registerrouter = require('./routers/router');
+const registerRestaurant=require('./routers/router')
 
 const app = express();
 
 app.use(cors());
 //app.use(bodyParser);
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use('/', Router);
+
+app.use('/login', loginrouter);
+app.use('/register', registerrouter);
+app.use('/resisterRestaurant',registerRestaurant)
+
 
 app.use('/category', categoryRouter);
 app.use('/order', orderRouter);

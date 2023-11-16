@@ -1,5 +1,4 @@
-import e from 'express';
-import AddressModel from './path/to/your/address/model';
+import AddressModel from '../models/userAddress.model'; 
 
 export const addAddress = async (req, res) => {
     const { userId, name, street, city, district, location } = req.body;
