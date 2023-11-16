@@ -2,7 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const config = require('./config');
-//const bodyParser = require("body-parser");
+const bodyParser = require("body-parser");
 const categoryRouter = require('./routers/category.router');
 const orderRouter = require('./routers/order.router');
 const restaurantRouter = require('./routers/restaurant.router');
@@ -11,11 +11,11 @@ const Router = require('./routers/router');
 const loginrouter = require('./routers/router');
 const registerrouter = require('./routers/router');
 const registerRestaurant=require('./routers/router')
-
+const router = express.Router();
 const app = express();
 
 app.use(cors());
-//app.use(bodyParser);
+app.use(bodyParser);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use('/', Router);
