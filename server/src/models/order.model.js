@@ -1,4 +1,4 @@
-const { model, Schema } = require("mongoose");
+const { Schema, model } = require('mongoose');
 
 const OrderSchema = new Schema({
   userId: {
@@ -50,31 +50,19 @@ const OrderSchema = new Schema({
 
 const OrderModel = model("order", OrderSchema);
 
-module.exports.addOrder = ({
-  userId,
-  restaurantId,
-  items,
-  totalPrice,
-  addressId,
-  status,
-}) =>
-  OrderModel.create({
-    userId,
-    restaurantId,
-    items,
-    totalPrice,
-    addressId,
-    status,
-  });
-
 module.exports.updateOrderbyId = (id, values) =>
   OrderModel.findByIdAndUpdate(id, { $set: values });
 
 //module.exports.deleteOrderbyId = (id) => OrderModel.findByIdAndDelete(id);
 
-module.exports.getAllOrders = () => OrderModel.find();
+module.exports. createOrder = (userId, restaurantId, items, totalPrice, addressId, status) => 
+      OrderModel.create(userId, restaurantId, items, totalPrice, addressId, status);
 
-module.exports.getOrderById = (id) => OrderModel.findById(id);
+module.exports. updateOrderbyUserId = (userId, values) => OrderModel.findByIdAndUpdate(userId, values);
+
+module.exports.deleteOrderbyUserId = (userId) => OrderModel.findByIdANdDelete(userId);
+
+module.exports. getAllOrders = () => OrderModel.find();
 
 module.exports.getAllOrdersForRestaurant = (restaurantId) =>
   OrderModel.find({ restaurantId });

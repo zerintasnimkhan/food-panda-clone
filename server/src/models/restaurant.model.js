@@ -1,4 +1,4 @@
-const {model,Schema} = require('mongoose');
+const { Schema, model } = require('mongoose');
 
 const RestaurantSchema = new Schema({
       name: {
@@ -50,15 +50,13 @@ const RestaurantSchema = new Schema({
 
 })
 
-const RestaurantModel = model("restaurant", RestaurantSchema);
+ const RestaurantModel = model("restaurant", RestaurantSchema);
 
 
 
-module.exports.getAllRestaurants = () => RestaurantModel.find();
+module.exports.getAllRestaurant = () => RestaurantModel.find();
 
-module.exports.getRestaurantById = (id) => RestaurantModel.findById(id);
+module.exports. getRestaurantByCategory = (category) => RestaurantModel.find({ category });
 
-module.exports.getRestaurantByCategory = (category) => RestaurantModel.find({ category });
-
-module.exports.addRestaurant = ({name, address, location, categories, ownerId, food, peakTime}) => 
-RestaurantModel.create({name, address, location, categories, ownerId, food, peakTime});
+module.exports.addRestaurants = (name, address, location, categories, ownerId, food, peakTime) => 
+RestaurantModel.create(name, address, location, categories, ownerId, food, peakTime);
