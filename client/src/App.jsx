@@ -1,15 +1,20 @@
-import './App.css'
+import './App.css';
+import AppNavbar from './components/Navbar';
 
 function App() {
 
   return (
     <>
-    <h1 className="text-3xl font-bold underline">
-      Food Panda!
+    <div>
+      <AppNavbar />
+    </div>
+    <h1 className="text-5xl p-20">
+      It's the food you love, 
+      delivered.
     </h1>
-    <button className='btn btn-primary'>Click me!</button>
+    <button className='text-xl btn btn-primary'>find food</button>
     </>
   )
 }
 
-export default App
+export default App;
