@@ -55,8 +55,8 @@ module.exports.updateOrderbyId = (id, values) =>
 
 //module.exports.deleteOrderbyId = (id) => OrderModel.findByIdAndDelete(id);
 
-module.exports. createOrder = (userId, restaurantId, items, totalPrice, addressId, status) => 
-      OrderModel.create(userId, restaurantId, items, totalPrice, addressId, status);
+module.exports. createOrder = ({userId, restaurantId, items, totalPrice, addressId, status}) => 
+      OrderModel.create({userId, restaurantId, items, totalPrice, addressId, status});
 
 module.exports. updateOrderbyUserId = (userId, values) => OrderModel.findByIdAndUpdate(userId, values);
 

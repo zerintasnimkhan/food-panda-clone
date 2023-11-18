@@ -25,6 +25,7 @@ module.exports.createRestaurant = async (req, res) => {
       ownerId,
       food,
       peakTime,
+      imgUrl: ""
     };
 
     const savedRestaurant = await addRestaurant(data);

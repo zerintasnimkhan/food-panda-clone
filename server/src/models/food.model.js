@@ -58,6 +58,6 @@ module.exports.deleteFoodById = (_id) => FoodModel.findByIdAndDelete(_id);
 
 
 
-module.exports.addFood = (name,imageUrl,price,category,prepareTime,servingSize,packageSize) =>
+module.exports.addFood = ({name,imageUrl,price,category,prepareTime,servingSize,packageSize}) =>
 
-FoodModel.create(name,imageUrl,price,category,prepareTime,servingSize,packageSize);
+FoodModel.create({name,imageUrl,price,category,prepareTime,servingSize,packageSize});
