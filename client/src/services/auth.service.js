@@ -15,7 +15,9 @@ export async function login (email, password) {
 export async function signup (name, email, password) {
   try {
     const url = `${baseUrl}/register`;
+    console.log(name, email, password)
     const res = await axios.post(url, { name, email, password });
+    console.log(res)
     return res.data;
   } catch (error) {
     console.log(error);

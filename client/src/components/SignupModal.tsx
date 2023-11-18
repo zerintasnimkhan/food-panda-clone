@@ -10,7 +10,7 @@ const SignupModal = () => {
   const handleSignup = async () => {
     console.log('Signing in with:', { email, password });
     try {
-      const res = await signup(email, password);
+      const res = await signup(userName,email, password);
       console.log(res);
     } catch (error) {
       console.log(error);
@@ -27,8 +27,8 @@ const SignupModal = () => {
             type="text"
             id="userName"
             className="mt-1 p-2 w-full border rounded-md"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={userName}
+            onChange={(e) => setUserName(e.target.value)}
           />
         </div>
         <div className="mb-4">
@@ -39,8 +39,8 @@ const SignupModal = () => {
             type="email"
             id="email"
             className="mt-1 p-2 w-full border rounded-md"
-            value={userName}
-            onChange={(e) => setUserName(e.target.value)}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
         </div>
         <div className="mb-4">
