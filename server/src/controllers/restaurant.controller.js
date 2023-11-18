@@ -3,7 +3,8 @@ const {
   getAllRestaurants,
   getRestaurantById,
   updateRestaurantById,
-  deleteRestaurantById
+  deleteRestaurantById,
+  RestaurantModel,
 } = require("../models/restaurant.model");
 
 module.exports.createRestaurant = async (req, res) => {
@@ -25,7 +26,7 @@ module.exports.createRestaurant = async (req, res) => {
       ownerId,
       food,
       peakTime,
-      imgUrl: ""
+      imgUrl: "",
     };
 
     const savedRestaurant = await addRestaurant(data);
@@ -42,9 +43,9 @@ module.exports.createRestaurant = async (req, res) => {
   }
 };
 
-module.exports.fetchAllRestaurants = async (_req, res) => {
+module.exports.fetchAllRestaurants = async (req, res) => {
   try {
-    const restaurants = await getAllRestaurants();
+    const restaurants = await RestaurantModel.find();
     res.status(200).json(restaurants);
   } catch (error) {
     res.status(500).json({ error: "Server error" });

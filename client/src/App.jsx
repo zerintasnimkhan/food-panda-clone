@@ -3,7 +3,6 @@ import './App.css';
 import LandingPage from './Pages/LandingPage';
 import CustomerContainer from './Pages/Customer/CustomerContainer';
 import CustomerHome from './Pages/Customer/CustomerHome';
-import RestaurantHome from './Pages/Restaurant/RestaurantHome';
 import RestaurantContainer from './Pages/Restaurant/RestaurantContainer';
 import OrdersPage from './Pages/Restaurant/OrdersPage';
 import FoodPage from './Pages/Restaurant/FoodPage';

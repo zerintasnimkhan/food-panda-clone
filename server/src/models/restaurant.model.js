@@ -54,7 +54,7 @@ const RestaurantSchema = new Schema({
 })
 
  const RestaurantModel = model("restaurant", RestaurantSchema);
-
+module.exports = { RestaurantModel };
 
 
 module.exports.getAllRestaurant = () => RestaurantModel.find();
