@@ -22,3 +22,15 @@ export async function signup (name, email, password) {
     throw new Error('Error signing up.');
   }
 }
+
+
+export async function getUserFromToken (token) {
+  try {
+    const url = `${baseUrl}/auth/user`;
+    const res = await axios.get(url, { headers: {Authorization: `Bearer ${token}`}});
+    return res.data;
+  } catch (error) {
+    console.log(error);
+    throw new Error('Error signing up.');
+  }
+}
