@@ -1,19 +1,16 @@
+import {BrowserRouter, Routes, Route, Navigate} from 'react-router-dom';
 import './App.css';
-import AppNavbar from './components/Navbar';
+import LandingPage from './Pages/LandingPage';
 
 function App() {
 
   return (
-    <>
-    <div>
-      <AppNavbar />
-    </div>
-    <h1 className="text-5xl p-20">
-      It's the food you love, 
-      delivered.
-    </h1>
-    <button className='text-xl btn btn-primary'>find food</button>
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="*" element={<Navigate to="/" />} />
+      </Routes>
+    </BrowserRouter>
   )
 }
 
