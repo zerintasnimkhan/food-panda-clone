@@ -46,6 +46,9 @@ const RestaurantSchema = new Schema({
       peakTime: {
             start: {type: Date},
             end: {type: Date},
+      },
+      imgUrl: {
+            type: String
       }
 
 })
@@ -58,5 +61,5 @@ module.exports.getAllRestaurant = () => RestaurantModel.find();
 
 module.exports. getRestaurantByCategory = (category) => RestaurantModel.find({ category });
 
-module.exports.addRestaurants = (name, address, location, categories, ownerId, food, peakTime) => 
-RestaurantModel.create(name, address, location, categories, ownerId, food, peakTime);
+module.exports.addRestaurants = ({name, address, location, categories, ownerId, food, peakTime, imgUrl}) => 
+RestaurantModel.create({name, address, location, categories, ownerId, food, peakTime, imgUrl});

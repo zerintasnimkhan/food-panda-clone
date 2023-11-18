@@ -101,4 +101,14 @@ async function registerRestaurant(req, res) {
     console.log(error);
   }
 }
-module.exports = { register, login, registerRestaurant };
+
+
+async function getAuthUserInfo (req, res) {
+  try {
+    res.send({ user: req.user});
+  } catch (error) {
+    res.status(500).send(error);
+    console.log(error);
+  }
+}
+module.exports = { register, login, registerRestaurant, getAuthUserInfo };
