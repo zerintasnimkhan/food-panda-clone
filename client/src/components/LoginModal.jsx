@@ -14,7 +14,7 @@ const LoginModal = () => {
       const { user, token } = res;
       localStorage.setItem('access-token', token);
       if (user.type === 'customer') navigate('/customer/home');
-      else navigate('/restaurant/home');
+      else navigate('/restaurant/orders');
       
     } catch (error) {
       console.log(error);
