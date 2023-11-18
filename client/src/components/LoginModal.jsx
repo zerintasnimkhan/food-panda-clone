@@ -1,24 +1,29 @@
 import React, { useState } from 'react';
 import { login } from '../services/auth.service';
-import { Button } from 'react-daisyui';
+import { useNavigate } from 'react-router-dom';
 
 const LoginModal = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const navigate = useNavigate();
+
   const handleLogin = async () => {
-    console.log('Logging in with:', { email, password });
     try {
       const res = await login(email, password);
-      console.log(res);
+      const { user, token } = res;
+      localStorage.setItem('access-token', token);
+      if (user.type === 'customer') navigate('/customer/home');
+      else navigate('/restaurant/orders');
+      
     } catch (error) {
       console.log(error);
     }
   };
 
   return (
-      <div className="bg-white p-8 rounded-md z-20">
-        <div className="mb-4">
+      <div className="bg-white p-8 rounded-md z-20 flex flex-col items-center">
+        <div className="mb-4 w-full">
           <label htmlFor="email" className="block text-sm font-medium text-gray-700">
             Email
           </label>
@@ -30,7 +35,7 @@ const LoginModal = () => {
             onChange={(e) => setEmail(e.target.value)}
           />
         </div>
-        <div className="mb-4">
+        <div className="mb-4 w-full">
           <label htmlFor="password" className="block text-sm font-medium text-gray-700">
             Password
           </label>
@@ -43,7 +48,7 @@ const LoginModal = () => {
           />
         </div>
         <div className="flex justify-end">
-          <Button color="primary" onClick={handleLogin} >Login</Button>
+          <button className='btn btn-primary' onClick={handleLogin}>Login</button>
         </div>
       </div>
   );

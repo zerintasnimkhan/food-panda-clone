@@ -36,7 +36,7 @@ const AddressSchema = new Schema({
 
 module.exports.getAllAddress = () => AddressModel.find();
 module.exports.getAddressById=(userId)=>AddressModel.findById(userId);
-module.exports. updateAddressById = (userId) => AddressModel.findByIdAndUpdate(userId);
-module.exports. deleteAddressById = (userId) => AddressModel.findByIdAndDelete(userId);
- addAddress = (userId,name,street,city,district,location) =>
-AddressModel.create(userId,name,street,city,district,location);
+module.exports.updateAddressById = (userId) => AddressModel.findByIdAndUpdate(userId);
+module.exports.deleteAddressById = (userId) => AddressModel.findByIdAndDelete(userId);
+module.exports.addAddress = ({userId,name,street,city,district,location}) =>
+AddressModel.create({userId,name,street,city,district,location});

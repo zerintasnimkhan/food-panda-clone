@@ -1,8 +1,9 @@
 require("dotenv").config();
 
 const config = {
-      PORT: '3000',
-      MONGOOSE_URI: process.env.MONGOOSE_URI 
+  PORT: process.env.PORT || '3000',
+  MONGOOSE_URI: process.env.MONGOOSE_URI,
+  JWT_SECRET: process.env.JWT_SECRET || 'samiyasecret'
 }
 
 module.exports = config;
