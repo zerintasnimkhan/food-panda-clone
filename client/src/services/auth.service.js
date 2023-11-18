@@ -11,3 +11,14 @@ export async function login (email, password) {
     throw new Error('Error logging in.');
   }
 }
+
+export async function signup (name, email, password) {
+  try {
+    const url = `${baseUrl}/register`;
+    const res = await axios.post(url, { name, email, password });
+    return res.data;
+  } catch (error) {
+    console.log(error);
+    throw new Error('Error signing up.');
+  }
+}
