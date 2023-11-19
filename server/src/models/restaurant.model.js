@@ -1,4 +1,4 @@
-const { Schema, model } = require("mongoose");
+const { Schema, model, mongoose } = require("mongoose");
 
 const RestaurantSchema = new Schema({
   name: {
@@ -81,49 +81,49 @@ module.exports.addRestaurant = ({
     imgUrl,
   });
 
-module.exports.getRestaurantByOwnerId = (ownerId) =>
-{
-      return RestaurantModel.find({ownerId});
-}
+module.exports.getRestaurantByOwnerId = (ownerId) => {
+  return RestaurantModel.find({ ownerId });
+};
 
 module.exports.getRestaurantFood = (restaurantId) => {
-      const pipeline = [
-        {
-          $match: { _id: new mongoose.Types.ObjectId(restaurantId) },
-        },
-        {
-          $unwind: "$food"
-        },
-        {
-          $lookup: {
-            from: "foods",
-            foreignField: "_id",
-            localField: "food",
-            as: "foodInfo"
-          }
-        },
-        {
-          $unwind: "$foodInfo"
-        },
-        {
-          $project: {
-            name: "$foodInfo.name",
-            imgUrl: "$foodInfo.imgUrl",
-            price: "$foodInfo.price",
-            category: "$foodInfo.category",
-            prepareTime: "$foodInfo.prepareTime",
-            servingSize: "$foodInfo.servingSize",
-          }
-        },
-        {
-          $lookup: {
-            from: "categories",
-            foreignField: "_id",
-            localField: "category",
-            as: "category"
-          }
-        },
-      ]
-    
-      return RestaurantModel.aggregate(pipeline);
-    }
+  const pipeline = [
+    {
+      $match: { _id: new mongoose.Types.ObjectId(restaurantId) },
+    },
+    {
+      $unwind: "$food",
+    },
+    {
+      $lookup: {
+        from: "foods",
+        foreignField: "_id",
+        localField: "food",
+        as: "foodInfo",
+      },
+    },
+    {
+      $unwind: "$foodInfo",
+    },
+    {
+      $project: {
+        foodId: "$foodInfo._id",
+        name: "$foodInfo.name",
+        imgUrl: "$foodInfo.imgUrl",
+        price: "$foodInfo.price",
+        category: "$foodInfo.category",
+        prepareTime: "$foodInfo.prepareTime",
+        servingSize: "$foodInfo.servingSize",
+      },
+    },
+    {
+      $lookup: {
+        from: "categories",
+        foreignField: "_id",
+        localField: "category",
+        as: "category",
+      },
+    },
+  ];
+
+  return RestaurantModel.aggregate(pipeline);
+};

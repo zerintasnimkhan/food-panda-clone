@@ -28,9 +28,9 @@ return (
     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQh5ziSE6CezGt9BhvkeNhJ1CldLuoAMXfASg&usqp=CAU" 
     className="w-5/6 rounded-lg shadow-2xl" />
     <div>
-      <h1 className="text-7xl">Takeout</h1>
+      <h1 className="text-7xl pb-10">Takeout</h1>
       <div className="py-6">
-      <div className='text-xl'><h1>Restaurant Information:</h1></div> <br></br>
+      <div className='text-3xl font-serif'><h1>Restaurant Information:</h1></div> <br></br>
       {error && <p>Error: {error}</p>}
       {restaurants.length === 0 ? (
         <p>no info found</p>
