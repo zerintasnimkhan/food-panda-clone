@@ -69,3 +69,5 @@ module.exports.getAllOrdersForRestaurant = (restaurantId) =>
 module.exports.getAllOrdersForUser = (userId) => OrderModel.find({ userId });
 
 module.exports.deleteOrderById = (id) => OrderModel.findByIdAndDelete(id);
+
+module.exports.getOrdersByRestaurantId

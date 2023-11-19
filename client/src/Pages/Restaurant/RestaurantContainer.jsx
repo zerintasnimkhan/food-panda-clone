@@ -1,6 +1,6 @@
 import React from 'react'
 import RestaurantNavBar from '../../components/RestaurantNavBar'
-import { Outlet } from 'react-router-dom'
+import { Outlet,Link } from 'react-router-dom'
 
 function RestaurantContainer() {
   return (
@@ -8,9 +8,9 @@ function RestaurantContainer() {
       <RestaurantNavBar />
       <div className='flex'>
       <ul className="menu bg-base-200 h-screen">
-        <li><a className='text-primary'>Orders</a></li>
-        <li><a className='text-primary'>Food</a></li>
-        <li><a className='text-primary'>Info</a></li>
+        <li><Link to="/restaurant/orders" className='text-primary'>Orders</Link></li>
+        <li><Link to="/restaurant/food" className='text-primary'>Food</Link></li>
+        <li><Link to="/restaurant/info" className='text-primary'>Info</Link></li>
       </ul>
       <Outlet />
       </div>

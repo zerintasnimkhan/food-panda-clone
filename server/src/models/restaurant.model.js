@@ -1,65 +1,87 @@
-const { Schema, model } = require('mongoose');
+const { Schema, model } = require("mongoose");
 
 const RestaurantSchema = new Schema({
-      name: {
-            type: String,
-            required: true,
-      },
-      address: {
-            street: {
-                  type: String,
-                  required: true,
-            },
-            city: {
-                  type: String,
-                  required: true, 
-            },
-            district: {
-                  type: String,
-                  required: true,
-            }
-            
-      },
-      location: {
-            lat: {
-                  type: Number,
-                  required: true,
-            },
-            lng: {
-                  type: Number,
-                  required: true,
-            }
-      },
-      categories: {
-            type: [{ type: Schema.ObjectId, ref: "category"}],
-            required: true, 
-      },
-      ownerId: {
-            type: Schema.ObjectId,
-            ref: 'user',
-            required: false,
-      },
-      food: {
-            type: [{ type: Schema.ObjectId, ref: "food"}],
-            required: true,
-      },
-      peakTime: {
-            start: {type: Date},
-            end: {type: Date},
-      },
-      imgUrl: {
-            type: String
-      }
+  name: {
+    type: String,
+    required: true,
+  },
+  address: {
+    street: {
+      type: String,
+      required: true,
+    },
+    city: {
+      type: String,
+      required: true,
+    },
+    district: {
+      type: String,
+      required: true,
+    },
+  },
+  location: {
+    lat: {
+      type: Number,
+      required: true,
+    },
+    lng: {
+      type: Number,
+      required: true,
+    },
+  },
+  categories: {
+    type: [{ type: Schema.ObjectId, ref: "category" }],
+    required: true,
+  },
+  ownerId: {
+    type: Schema.ObjectId,
+    ref: "user",
+    required: false,
+  },
+  food: {
+    type: [{ type: Schema.ObjectId, ref: "food" }],
+    required: true,
+  },
+  peakTime: {
+    start: { type: Date },
+    end: { type: Date },
+  },
+  imgUrl: {
+    type: String,
+  },
+});
 
-})
+const RestaurantModel = model("restaurant", RestaurantSchema);
 
- const RestaurantModel = model("restaurant", RestaurantSchema);
+module.exports.getAllRestaurants = () => RestaurantModel.find();
 
+module.exports.getRestaurantById = (id) => RestaurantModel.findById(id);
 
+module.exports.getRestaurantByCategory = (category) =>
+  RestaurantModel.find({ category });
 
-module.exports.getAllRestaurant = () => RestaurantModel.find();
+module.exports.addRestaurant = ({
+  name,
+  address,
+  location,
+  categories,
+  ownerId,
+  food,
+  peakTime,
+  imgUrl,
+}) =>
+  RestaurantModel.create({
+    name,
+    address,
+    location,
+    categories,
+    ownerId,
+    food,
+    peakTime,
+    imgUrl,
+  });
 
-module.exports. getRestaurantByCategory = (category) => RestaurantModel.find({ category });
-
-module.exports.addRestaurants = ({name, address, location, categories, ownerId, food, peakTime, imgUrl}) => 
-RestaurantModel.create({name, address, location, categories, ownerId, food, peakTime, imgUrl});
+module.exports.getRestaurantByOwnerId = (ownerId) =>
+{
+      return RestaurantModel.find({ownerId});
+}

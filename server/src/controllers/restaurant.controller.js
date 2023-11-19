@@ -3,7 +3,8 @@ const {
   getAllRestaurants,
   getRestaurantById,
   updateRestaurantById,
-  deleteRestaurantById
+  deleteRestaurantById,
+  getRestaurantByOwnerId
 } = require("../models/restaurant.model");
 
 module.exports.createRestaurant = async (req, res) => {
@@ -25,7 +26,7 @@ module.exports.createRestaurant = async (req, res) => {
       ownerId,
       food,
       peakTime,
-      imgUrl: ""
+      imgUrl: "",
     };
 
     const savedRestaurant = await addRestaurant(data);
@@ -45,9 +46,10 @@ module.exports.createRestaurant = async (req, res) => {
 module.exports.fetchAllRestaurants = async (_req, res) => {
   try {
     const restaurants = await getAllRestaurants();
+    console.log(restaurants);
     res.status(200).json(restaurants);
   } catch (error) {
-    res.status(500).json({ error: "Server error" });
+    res.status(500).json({ error: error });
   }
 };
 
@@ -98,3 +100,15 @@ module.exports.removeRestaurant = async (req, res) => {
     return res.status(500).json({ error: "Internal Server Error" });
   }
 };
+
+module.exports.fetchRestaurantByOwnerId = async (req, res) => {
+  try{
+    const user = req.user;
+    const ownerId = user._id;
+    const restaurant = await getRestaurantByOwnerId(ownerId);
+    return res.status(200).json(restaurant);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
+}
