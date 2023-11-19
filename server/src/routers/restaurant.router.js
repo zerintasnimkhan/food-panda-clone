@@ -8,6 +8,7 @@ router.post("/add", restaurantController.createRestaurant);
 router.get("/all", restaurantController.fetchAllRestaurants);
 router.get("/fetch/:id", restaurantController.fetchRestaurantById);
 router.get("/owner",authMiddleware, restaurantMiddleware, restaurantController.fetchRestaurantByOwnerId);
+router.get("/:id/foods", restaurantController.fetchRestaurantFoods);
 
 
 module.exports = router;

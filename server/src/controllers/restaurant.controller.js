@@ -4,7 +4,8 @@ const {
   getRestaurantById,
   updateRestaurantById,
   deleteRestaurantById,
-  getRestaurantByOwnerId
+  getRestaurantByOwnerId,
+  getRestaurantFood,
 } = require("../models/restaurant.model");
 
 module.exports.createRestaurant = async (req, res) => {
@@ -102,7 +103,7 @@ module.exports.removeRestaurant = async (req, res) => {
 };
 
 module.exports.fetchRestaurantByOwnerId = async (req, res) => {
-  try{
+  try {
     const user = req.user;
     const ownerId = user._id;
     const restaurant = await getRestaurantByOwnerId(ownerId);
@@ -111,4 +112,15 @@ module.exports.fetchRestaurantByOwnerId = async (req, res) => {
     console.error(error);
     return res.status(500).json({ error: "Internal Server Error" });
   }
-}
+};
+
+module.exports.fetchRestaurantFoods = async (req, res) => {
+  try {
+    const restaurantId = req.params.id;
+    const food = await getRestaurantFood(restaurantId);
+    return res.status(200).json(food);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
+};

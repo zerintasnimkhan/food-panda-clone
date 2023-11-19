@@ -26,11 +26,11 @@ return (
   <div className="hero p-0 bg-base-200">
   <div className="hero-content flex-col lg:flex-row">
     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQh5ziSE6CezGt9BhvkeNhJ1CldLuoAMXfASg&usqp=CAU" 
-    className="w-1/2 rounded-lg shadow-2xl" />
+    className="w-5/6 rounded-lg shadow-2xl" />
     <div>
-      <h1 className="text-5xl">Takeout</h1>
+      <h1 className="text-7xl">Takeout</h1>
       <div className="py-6">
-      <h1>Restaurant Information:</h1> <br></br>
+      <div className='text-xl'><h1>Restaurant Information:</h1></div> <br></br>
       {error && <p>Error: {error}</p>}
       {restaurants.length === 0 ? (
         <p>no info found</p>
