@@ -103,7 +103,7 @@ module.exports.fetchOrdersByRestaurant = async (req, res) => {
     const restaurantId = req.params.restaurantId;
     const restaurant = await getRestaurantById(restaurantId);
 
-    if (restaurant && restaurant.ownerId.equals(user._id)) {
+    if (restaurant?.ownerId.equals(user._id)) {
       const orders = await getOrdersByRestaurantId(restaurantId);
       return res.status(200).json(orders);
     } else {
