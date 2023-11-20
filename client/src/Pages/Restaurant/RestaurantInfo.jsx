@@ -13,6 +13,7 @@ const RestaurantList = () => {
     const fetchRestaurants = async () => {
       try {
         const restaurantData = await restaurantInfo();
+        console.log(restaurantData)
         setRestaurants(restaurantData);
       } catch (error) {
         console.error("Error in RestaurantList:", error);
