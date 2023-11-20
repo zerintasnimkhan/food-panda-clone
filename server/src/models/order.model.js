@@ -53,7 +53,7 @@ const OrderModel = model("order", OrderSchema);
 module.exports.updateOrderbyId = (id, values) =>
   OrderModel.findByIdAndUpdate(id, { $set: values });
 
-//module.exports.deleteOrderbyId = (id) => OrderModel.findByIdAndDelete(id);
+module.exports.deleteOrderbyId = (id) => OrderModel.findByIdAndDelete(id);
 
 module.exports.createOrder = ({
   userId,
@@ -75,19 +75,17 @@ module.exports.createOrder = ({
 module.exports.updateOrderbyUserId = (userId, values) =>
   OrderModel.findByIdAndUpdate(userId, values);
 
-module.exports.deleteOrderbyUserId = (userId) =>
-  OrderModel.findByIdANdDelete(userId);
-
 module.exports.getAllOrders = () => OrderModel.find();
 
 module.exports.getOrdersByRestaurantId = (restaurantId) => {
   const pipeline = [
     {
       $match: {
-        restaurantId: new mongoose.Types.ObjectId(restaurantId)},
+        restaurantId: new mongoose.Types.ObjectId(restaurantId)
+      },
     },
     {
-      $lookup: { 
+      $lookup: {
         from: "users",
         foreignField: "_id",
         localField: "userId",
@@ -96,10 +94,50 @@ module.exports.getOrdersByRestaurantId = (restaurantId) => {
     },
     {
       $unwind: "$user",
+    },
+    {
+      $unwind: "$items",
+    },
+    {
+      $lookup: {
+        from: "foods",
+        foreignField: "_id",
+        localField: "items.foodId",
+        as: "items.foodInfo"
+      }
+    },
+    {
+      $unwind: '$items.foodInfo'
+    },
+    {
+      $group: {
+        _id:
+        {
+          _id: '$_id',
+          userId: '$userId',
+          restaurantId: '$restaurantId',
+          totalPrice: '$totalPrice',
+          address: '$address',
+          status: '$status',
+          user: '$user'
+        },
+        items: { $push: '$items' },
+      }
+    },
+    {
+      $project: {
+        _id: '$_id._id',
+        userId: '$_id.userId',
+        restaurantId: '$_id.restaurantId',
+        totalPrice: '$_id.totalPrice',
+        address: '$_id.address',
+        status: '$_id.status',
+        user: '$_id.user',
+        items: 1
+      }
     }
   ]
   return OrderModel.aggregate(pipeline);
-
 }
   
 

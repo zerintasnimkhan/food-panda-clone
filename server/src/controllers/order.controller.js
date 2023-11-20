@@ -6,6 +6,7 @@ const {
   deleteOrderById,
   getOrdersByRestaurantId,
 } = require("../models/order.model");
+const { getRestaurantByOwnerId, getRestaurantById } = require("../models/restaurant.model");
 
 module.exports.addOrder = async (req, res) => {
   try {
@@ -98,9 +99,16 @@ module.exports.removeOrder = async (req, res) => {
 
 module.exports.fetchOrdersByRestaurant = async (req, res) => {
   try {
+    const user = req.user;
     const restaurantId = req.params.restaurantId;
-    const orders = await getOrdersByRestaurantId(restaurantId);
-    return res.status(200).json(orders);
+    const restaurant = await getRestaurantById(restaurantId);
+
+    if (restaurant?.ownerId.equals(user._id)) {
+      const orders = await getOrdersByRestaurantId(restaurantId);
+      return res.status(200).json(orders);
+    } else {
+      res.status(403).json({message: 'You are not the owner of this restaurant'});
+    }
   } catch (error) {
     console.error(error);
     return res.status(500).json({ error: "Internal Server Error" });
