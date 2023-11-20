@@ -1,4 +1,4 @@
-const { Schema, model } = require('mongoose');
+const { Schema, model, mongoose } = require("mongoose");
 
 const OrderSchema = new Schema({
   userId: {
@@ -55,17 +55,56 @@ module.exports.updateOrderbyId = (id, values) =>
 
 //module.exports.deleteOrderbyId = (id) => OrderModel.findByIdAndDelete(id);
 
-module.exports. createOrder = ({userId, restaurantId, items, totalPrice, addressId, status}) => 
-      OrderModel.create({userId, restaurantId, items, totalPrice, addressId, status});
+module.exports.createOrder = ({
+  userId,
+  restaurantId,
+  items,
+  totalPrice,
+  addressId,
+  status,
+}) =>
+  OrderModel.create({
+    userId,
+    restaurantId,
+    items,
+    totalPrice,
+    addressId,
+    status,
+  });
 
-module.exports. updateOrderbyUserId = (userId, values) => OrderModel.findByIdAndUpdate(userId, values);
+module.exports.updateOrderbyUserId = (userId, values) =>
+  OrderModel.findByIdAndUpdate(userId, values);
 
-module.exports.deleteOrderbyUserId = (userId) => OrderModel.findByIdANdDelete(userId);
+module.exports.deleteOrderbyUserId = (userId) =>
+  OrderModel.findByIdANdDelete(userId);
 
-module.exports. getAllOrders = () => OrderModel.find();
+module.exports.getAllOrders = () => OrderModel.find();
 
-module.exports.getAllOrdersForRestaurant = (restaurantId) =>
-  OrderModel.find({ restaurantId });
+module.exports.getOrdersByRestaurantId = (restaurantId) => {
+  const pipeline = [
+    {
+      $match: {
+        restaurantId: new mongoose.Types.ObjectId(restaurantId)},
+    },
+    {
+      $lookup: { 
+        from: "users",
+        foreignField: "_id",
+        localField: "userId",
+        as: "user"
+      }
+    },
+    {
+      $unwind: "$user",
+    }
+  ]
+  return OrderModel.aggregate(pipeline);
+
+}
+  
+
 module.exports.getAllOrdersForUser = (userId) => OrderModel.find({ userId });
 
 module.exports.deleteOrderById = (id) => OrderModel.findByIdAndDelete(id);
+
+

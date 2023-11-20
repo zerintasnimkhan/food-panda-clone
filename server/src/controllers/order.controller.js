@@ -1,12 +1,13 @@
 const {
-  addOrder,
+  createOrder,
   getAllOrders,
   getOrderById,
   updateOrderbyId,
   deleteOrderById,
+  getOrdersByRestaurantId,
 } = require("../models/order.model");
 
-module.exports.createOrder = async (req, res) => {
+module.exports.addOrder = async (req, res) => {
   try {
     console.log(req.body);
     const { restaurantId, items, totalPrice, addressId, status } = req.body;
@@ -32,7 +33,7 @@ module.exports.createOrder = async (req, res) => {
       status,
     };
 
-    const savedOrder = await addOrder(data);
+    const savedOrder = await createOrder(data);
 
     res.status(201).json({ message: "Order placed", food: savedOrder });
   } catch (error) {
@@ -89,6 +90,17 @@ module.exports.removeOrder = async (req, res) => {
     }
     await deleteOrderById(orderId);
     return res.status(204).json({ msg: "success" });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+module.exports.fetchOrdersByRestaurant = async (req, res) => {
+  try {
+    const restaurantId = req.params.restaurantId;
+    const orders = await getOrdersByRestaurantId(restaurantId);
+    return res.status(200).json(orders);
   } catch (error) {
     console.error(error);
     return res.status(500).json({ error: "Internal Server Error" });
