@@ -1,4 +1,4 @@
-const { Schema, model } = require("mongoose");
+const { Schema, model, mongoose } = require("mongoose");
 
 const OrderSchema = new Schema({
   userId: {
@@ -80,9 +80,31 @@ module.exports.deleteOrderbyUserId = (userId) =>
 
 module.exports.getAllOrders = () => OrderModel.find();
 
-module.exports.getOrdersByRestaurantId = (restaurantId) =>
-  OrderModel.find({ restaurantId });
+module.exports.getOrdersByRestaurantId = (restaurantId) => {
+  const pipeline = [
+    {
+      $match: {
+        restaurantId: new mongoose.Types.ObjectId(restaurantId)},
+    },
+    {
+      $lookup: { 
+        from: "users",
+        foreignField: "_id",
+        localField: "userId",
+        as: "user"
+      }
+    },
+    {
+      $unwind: "$user",
+    }
+  ]
+  return OrderModel.aggregate(pipeline);
+
+}
+  
 
 module.exports.getAllOrdersForUser = (userId) => OrderModel.find({ userId });
 
 module.exports.deleteOrderById = (id) => OrderModel.findByIdAndDelete(id);
+
+
