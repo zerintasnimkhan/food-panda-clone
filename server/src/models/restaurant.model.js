@@ -82,7 +82,54 @@ module.exports.addRestaurant = ({
   });
 
 module.exports.getRestaurantByOwnerId = (ownerId) => {
-  return RestaurantModel.find({ ownerId });
+
+  const pipeline = [
+    {
+      $match: { ownerId: new mongoose.Types.ObjectId(ownerId) }
+    },
+    {
+      $unwind: "$categories"
+    },
+    {
+      $lookup: {
+        from: "categories",
+        foreignField: "_id",
+        localField: "categories",
+        as: "categories"
+      }
+    },
+    {
+      $unwind: "$categories"
+    },
+    {
+      $group: {
+        _id: {
+          _id: "$_id",
+          name: "$name",
+          address: "$address",
+          location: "$location",
+          ownerId: "$ownerId",
+          food: "$food ",
+          imgUrl: "$imgUrl",
+        },
+        categories: { $push: '$categories' }
+      }
+    },
+    {
+      $project: {
+        _id: "$_id._id",
+        name: "$_id.name",
+        address: "$_id.address",
+        location: "$_id.location",
+        ownerId: "$_id.ownerId",
+        food: "$_id.food ",
+        imgUrl: "$_id.imgUrl",
+        categories: 1
+      }
+    }
+  ]
+
+  return RestaurantModel.aggregate(pipeline);
 };
 
 module.exports.getRestaurantFood = (restaurantId) => {

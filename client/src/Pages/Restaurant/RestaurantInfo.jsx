@@ -11,6 +11,7 @@ const RestaurantList = () => {
     const fetchRestaurants = async () => {
       try {
         const restaurantData = await restaurantInfo();
+        console.log(restaurantData)
         setRestaurants(restaurantData);
       } catch (error) {
         console.error('Error in RestaurantList:', error);
@@ -48,7 +49,7 @@ const RestaurantList = () => {
 
               <div className='my-5'>
                 <b>Categories:</b> {restaurants[0].categories.map(category =>
-                  <div key={category} className="badge badge-primary">{category}</div>
+                  <div key={category} className="badge badge-primary">{category.name}</div>
                 )}
               </div>
 
