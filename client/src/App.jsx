@@ -5,7 +5,7 @@ import CustomerContainer from './Pages/Customer/CustomerContainer';
 import CustomerHome from './Pages/Customer/CustomerHome';
 import RestaurantContainer from './Pages/Restaurant/RestaurantContainer';
 import OrdersPage from './Pages/Restaurant/OrdersPage';
-import FoodPage from './Pages/Restaurant/FoodPage';
+// import FoodPage from './Pages/Restaurant/FoodPage';
 import RestaurantInfo from './Pages/Restaurant/RestaurantInfo';
 import ShowFood from './Pages/Customer/ShowFood';
 
@@ -23,7 +23,7 @@ function App() {
        
         <Route path="/restaurant/" element={<RestaurantContainer />}>
           <Route path="orders" element={<OrdersPage />} />
-          <Route path="food" element={<FoodPage />} />
+          {/* <Route path="food" element={<FoodPage />} /> */}
           <Route path="info" element={<RestaurantInfo />} />
         </Route>
 

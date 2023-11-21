@@ -27,15 +27,15 @@ export async function OrdersForRestaurant() {
   }
 }
 
-import axios from 'axios';
+
 
 export async function getRestaurantFood(restaurantId) {
     try {
-      const response = await axios.get(`${baseUrl}/restaurant/food/${restaurantId}`);
+      const response = await axios.get(`${baseUrl}/restaurant/${restaurantId}/foods`);
       return response.data;
     } catch (error) {
       console.error('Error fetching restaurant food:', error);
       throw new Error('Error fetching restaurant food.');
     }
-};
+}
 
