@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { OrdersForRestaurant } from "../../services/restaurant.service";
 import ViewOrderModal from "../../components/ViewOrderModal";
+import RejectOrderModal from "../../components/RejectOrderModal";
 
 const RestaurantOrders = ({ restaurantId }) => {
   const [orders, setOrders] = useState([]);
@@ -38,9 +39,9 @@ const RestaurantOrders = ({ restaurantId }) => {
             <>
               <div key={order._id} className="p-4 border rounded-md shadow-md">
                 <h2 className="text-xl font-bold">Order ID: {order._id}</h2>
+                <ul>
                 <p>User ID: {order.userId}</p>
-                <p>Address ID: {order.addressId}</p>
-                <p>Total Price: {order.totalPrice}</p>
+                </ul>
                 <p>Status: {order.status}</p> <br></br>
                 <button
                   className="btn btn-active btn-primary"
@@ -50,14 +51,30 @@ const RestaurantOrders = ({ restaurantId }) => {
                 >
                   View Order
                 </button>
-                <button className="btn btn-outline btn-secondary">
+                <button className="btn btn-outline btn-secondary"onClick={() =>
+                    document.getElementById("rejectOrder-modal").showModal()
+                  }>
                   Reject
                 </button>
               </div>
               <dialog id={"viewOrder-modal" + order._id} className="modal">
                 <div className="modal-box">
-                  <h3 className="font-bold text-lg">Order Details</h3>
+                  <h3 className="font-bold text-lg pl-7 pt-5">Order Details</h3>
                   <ViewOrderModal order={order}/>
+                  <div className="modal-action">
+                    <form method="dialog">
+                      <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+                        ✕
+                      </button>
+                    </form>
+                  </div>
+                </div>
+              </dialog>
+
+              <dialog id={"rejectOrder-modal"} className="modal">
+                <div className="modal-box">
+                  <h3 className="text-lg pt-5 pl-5">Do you want to reject the order?</h3>
+                  <RejectOrderModal/>
                   <div className="modal-action">
                     <form method="dialog">
                       <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
