@@ -41,8 +41,7 @@ function CustomerHome() {
                     {restaurant.address.city}
                     {/* {restaurant.address.district} */}
                   </p>
-                  {/* <p>{restaurant.address.city}</p>
-                  <p>{restaurant.address.district}</p> */}
+                
 
                   <div className="card-actions justify-end">
                     <Link to={`/customer/restaurant/food/${restaurant._id}`}>
