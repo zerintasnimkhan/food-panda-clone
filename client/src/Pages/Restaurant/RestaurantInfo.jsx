@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import {restaurantInfo}  from '../../services/restaurant.service';
+import { restaurantInfo } from '../../services/restaurant.service';
 import { useNavigate } from 'react-router-dom';
+import RestaurantMap from '../../components/RestaurantMap';
 
 const RestaurantList = () => {
   const [restaurants, setRestaurants] = useState([]);
   const [error, setError] = useState(null);
- 
+
   useEffect(() => {
     const fetchRestaurants = async () => {
       try {
         const restaurantData = await restaurantInfo();
-        console.log(restaurantData);
+        console.log(restaurantData)
         setRestaurants(restaurantData);
       } catch (error) {
         console.error('Error in RestaurantList:', error);
@@ -21,39 +22,44 @@ const RestaurantList = () => {
     fetchRestaurants();
   }, []);
 
-return (
+  return (
+    <>
+      {!!restaurants.length &&
+        <div className="flex-1">
+          <div className="hero h-52" style={{ backgroundImage: `url(${restaurants[0].imgUrl})` }}>
+            <div className="hero-overlay bg-opacity-60"></div>
+            <div className="hero-content text-center text-neutral-content">
+              <div className="max-w-md">
+                <h1 className="mb-5 text-5xl font-bold">{restaurants[0].name}</h1>
+              </div>
+            </div>
+          </div>
+          <div className='flex w-full justify-around mt-5 text-lg'>
+            <div>
+              <div className='my-5'><b>Restaurant name:</b> {restaurants[0].name}</div>
 
-  <div className="hero p-0 bg-base-200">
-  <div className="hero-content flex-col lg:flex-row">
-    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQh5ziSE6CezGt9BhvkeNhJ1CldLuoAMXfASg&usqp=CAU" 
-    className="w-5/6 rounded-lg shadow-2xl" />
-    <div>
-      <h1 className="text-7xl pb-10">Takeout</h1>
-      <div className="py-6">
-      <div className='text-3xl font-serif'><h1>Restaurant Information:</h1></div> <br></br>
-      {error && <p>Error: {error}</p>}
-      {restaurants.length === 0 ? (
-        <p>no info found</p>
-      ) : (
-        <ul>
-          {restaurants.map((restaurant) => (
-            <li key={restaurant._id}>
-              <p className="font-sans md:font-serif font-semibold">Address: {`${restaurant.address.street}, ${restaurant.address.city}, ${restaurant.address.district}`}</p>
-              <p className="font-sans md:font-serif font-semibold">Location: {`(${restaurant.location.lat}, ${restaurant.location.lng})`}</p>
-              <p className="font-sans md:font-serif">Categories: {`(${restaurant.categories}, ${restaurant.categories})`}</p>
-              <p className="font-sans md:font-serif">food: {`(${restaurant.food}, ${restaurant.food})`}</p>
-              
-           </li>
-          ))}
-        </ul>
-      )}
-    </div>
-      <button className="btn btn-primary">know more</button>
-    </div>
-  </div>
-</div>
+              <div className='flex my-5'>
+                <div><b>Address:</b></div>
+                <div className='ml-5'>
+                  <div>{restaurants[0].address.street}</div>
+                  <div>{restaurants[0].address.city}</div>
+                  <div>{restaurants[0].address.district}</div>
+                </div>
+              </div>
 
-    
+              <div className='my-5'>
+                <b>Categories:</b> {restaurants[0].categories.map(category =>
+                  <div key={category} className="badge badge-primary">{category.name}</div>
+                )}
+              </div>
+
+              <button className='btn btn-primary'>Edit Information</button>
+            </div>
+            <RestaurantMap restaurant={restaurants[0]} />
+          </div>
+        </div>
+      }
+    </>
   );
 };
 
