@@ -4,6 +4,7 @@ import { updateRestaurantInfo } from '../../services/restaurant.service';
 import RestaurantMap from '../../components/RestaurantMap';
 import EditLocationModal from '../../components/EditLocationModal';
 import { cldUpload } from '../../services/cloudinary.service';
+import EditCategoriesModal from '../../components/EditCategoriesModal';
 
 function EditRestaurantPage() {
 
@@ -33,8 +34,12 @@ function EditRestaurantPage() {
 
   }
 
-  function handleLocationChange (lng, lat) {
-    setRestaurantInfo(prevState => ({...prevState, location: { lng, lat }}));
+  function handleLocationChange(lng, lat) {
+    setRestaurantInfo(prevState => ({ ...prevState, location: { lng, lat } }));
+  }
+
+  function handleCategoryChange(categories) {
+    setRestaurantInfo(prevState => ({ ...prevState, categories}));
   }
 
 
@@ -48,8 +53,8 @@ function EditRestaurantPage() {
         imgUrl = secure_url
       }
 
-      const res = await updateRestaurantInfo(restaurantInfo._id, {...restaurantInfo, imgUrl: imgUrl ? imgUrl : restaurantInfo.imgUrl});
-      console.log(res);
+      const res = await updateRestaurantInfo(restaurantInfo._id, { ...restaurantInfo, imgUrl: imgUrl ? imgUrl : restaurantInfo.imgUrl });
+      console.log("Submission result:", res);
     } catch (error) {
       console.log(error);
     }
@@ -57,7 +62,7 @@ function EditRestaurantPage() {
 
   return (
     <div className="flex-1 flex">
-      <form className='w-1/2 flex flex-col items-center'>
+      <div className='w-1/2 flex flex-col items-center'>
         <h1 className='text-2xl font-bold my-3'>Edit Restaurant Info</h1>
         <div className="w-5/6 flex justify-between items-center my-3">
           <label htmlFor='name'>Name: </label>
@@ -109,22 +114,35 @@ function EditRestaurantPage() {
 
         <div className="w-5/6 flex justify-between items-center my-3">
           <label htmlFor='img'>Image: </label>
-          <input 
-            name="img" 
-            type="file" 
-            accept="image/png, image/jpeg" 
-            className="file-input file-input-bordered file-input-primary w-full max-w-xs" 
+          <input
+            name="img"
+            type="file"
+            accept="image/png, image/jpeg"
+            className="file-input file-input-bordered file-input-primary w-full max-w-xs"
             onChange={handleChange}
           />
         </div>
 
         <div className="w-5/6 flex justify-between items-center my-3">
           <label htmlFor='img'>Categories: </label>
-          <button className='btn btn-primary btn-outline' onClick={(e) => { e.preventDefault() }}>Edit categories</button>
+          <div>
+            {restaurantInfo && restaurantInfo.categories.map(category => <div key={category._id} className="badge badge-primary badge-lg">{category.name}</div>)}
+          </div>
+          <button className='btn btn-primary btn-outline' onClick={(e) => { e.preventDefault(); document.getElementById('edit-categories-modal').showModal()}}>Edit categories</button>
         </div>
 
         <button className='btn btn-primary' onClick={handleSubmit}>Update Info</button>
-      </form>
+
+        <dialog id="edit-categories-modal" className="modal">
+          <div className="modal-box">
+            <form method="dialog">
+              <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+            </form>
+            <EditCategoriesModal handleCategoryChange={handleCategoryChange} restaurantCat={restaurantInfo ? restaurantInfo.categories : []} />
+          </div>
+        </dialog>
+
+      </div>
 
       <div className='w-1/2 flex flex-col items-center mt-20'>
         {restaurantInfo &&

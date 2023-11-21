@@ -50,4 +50,12 @@ export async function updateRestaurantInfo(restaurantId, data) {
   }
 };
 
-
+export async function getAllCategories() {
+  try {
+    const response = await axios.get(`${baseUrl}/category/all`);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching restaurant food:', error);
+    throw new Error('Error fetching restaurant food.');
+  }
+};
