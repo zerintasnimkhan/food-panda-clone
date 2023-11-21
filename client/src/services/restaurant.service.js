@@ -18,8 +18,12 @@ export async function OrdersForRestaurant() {
   try {
     const userRestaurant = await restaurantInfo();
     const restaurantId = userRestaurant[0]._id;
+
+    const token = localStorage.getItem("access-token");
+    const headers = { Authorization: `Bearer ${token}` };
+
     const url = `${baseUrl}/order/restaurant/${restaurantId}`;
-    const res = await axios.get(url);
+    const res = await axios.get(url, { headers });
     return res.data;
   } catch (error) {
     console.error("Error fetching orders by restaurant ID:", error);
