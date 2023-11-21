@@ -3,10 +3,12 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import { updateRestaurantInfo } from '../../services/restaurant.service';
 import RestaurantMap from '../../components/RestaurantMap';
 import EditLocationModal from '../../components/EditLocationModal';
+import { cldUpload } from '../../services/cloudinary.service';
 
 function EditRestaurantPage() {
 
   const [restaurantInfo, setRestaurantInfo] = useState();
+  const [newImage, setNewImage] = useState();
 
   const { state } = useLocation();
   const navigate = useNavigate();
@@ -19,11 +21,16 @@ function EditRestaurantPage() {
   function handleChange(e) {
     const { name, value } = e.target;
 
+    if (name === 'img') {
+      setNewImage(e.target.files[0]);
+    }
+
     if (name === 'street' || name === 'city' || name === 'district') {
       setRestaurantInfo(prevState => ({ ...prevState, address: { ...prevState.address, [name]: value } }));
     } else {
       setRestaurantInfo(prevState => ({ ...prevState, [name]: value }));
     }
+
   }
 
   function handleLocationChange (lng, lat) {
@@ -35,7 +42,13 @@ function EditRestaurantPage() {
     e.preventDefault();
 
     try {
-      const res = await updateRestaurantInfo(restaurantInfo._id, restaurantInfo);
+      let imgUrl;
+      if (newImage) {
+        const { secure_url } = await cldUpload(restaurantInfo._id, newImage);
+        imgUrl = secure_url
+      }
+
+      const res = await updateRestaurantInfo(restaurantInfo._id, {...restaurantInfo, imgUrl: imgUrl ? imgUrl : restaurantInfo.imgUrl});
       console.log(res);
     } catch (error) {
       console.log(error);
@@ -96,7 +109,13 @@ function EditRestaurantPage() {
 
         <div className="w-5/6 flex justify-between items-center my-3">
           <label htmlFor='img'>Image: </label>
-          <input name="img" type="file" accept="image/png, image/jpeg" className="file-input file-input-bordered file-input-primary w-full max-w-xs" />
+          <input 
+            name="img" 
+            type="file" 
+            accept="image/png, image/jpeg" 
+            className="file-input file-input-bordered file-input-primary w-full max-w-xs" 
+            onChange={handleChange}
+          />
         </div>
 
         <div className="w-5/6 flex justify-between items-center my-3">
