@@ -7,11 +7,12 @@ const RestaurantList = () => {
   const [restaurants, setRestaurants] = useState([]);
   const [error, setError] = useState(null);
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     const fetchRestaurants = async () => {
       try {
         const restaurantData = await restaurantInfo();
-        console.log(restaurantData)
         setRestaurants(restaurantData);
       } catch (error) {
         console.error('Error in RestaurantList:', error);
@@ -53,7 +54,7 @@ const RestaurantList = () => {
                 )}
               </div>
 
-              <button className='btn btn-primary'>Edit Information</button>
+              <button className='btn btn-primary' onClick={() => {navigate('/restaurant/edit/info', { state: { restaurant: restaurants[0] } })}}>Edit Information</button>
             </div>
             <RestaurantMap restaurant={restaurants[0]} />
           </div>

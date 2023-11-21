@@ -2,7 +2,7 @@ const {
   addRestaurant,
   getAllRestaurants,
   getRestaurantById,
-  updateRestaurantById,
+  updateRestaurantInfoById,
   deleteRestaurantById,
   getRestaurantByOwnerId,
   getRestaurantFood,
@@ -63,30 +63,6 @@ module.exports.fetchRestaurantById = async (req, res) => {
   }
 };
 
-module.exports.updateById = async (req, res) => {
-  try {
-    const restaurantId = req.params.id;
-    const food = await getRestaurantById(restaurantId);
-    if (!food) {
-      return res.status(404).json({ errror: "Restaurant not found" });
-    }
-
-    const updatedata = req.body;
-    const updatedRestaurant = await updateRestaurantById(
-      req.params.id,
-      updatedata
-    );
-
-    res.status(200).json(updatedRestaurant);
-  } catch (error) {
-    console.error(error);
-    if (error.name === "ValidationError") {
-      return res.status(400).json({ error: error.message });
-    }
-    res.status(500).json({ error: "Internal Server Error" });
-  }
-};
-
 module.exports.removeRestaurant = async (req, res) => {
   try {
     const restaurantId = req.params.id;
@@ -119,6 +95,27 @@ module.exports.fetchRestaurantFoods = async (req, res) => {
     const restaurantId = req.params.id;
     const food = await getRestaurantFood(restaurantId);
     return res.status(200).json(food);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+
+module.exports.updateRestaurantById = async (req, res) => {
+  try {
+    const restaurantId = req.params.id;
+    const data = req.body;
+    const ownerId = req.user._id;
+
+    const restaurant = await getRestaurantById(restaurantId);
+    if (!restaurant || !restaurant.ownerId.equals(ownerId)) {
+      return res.status(403).json({ message: 'You are not the owner of this restaurant.'});
+    }
+
+    await updateRestaurantInfoById(restaurantId, data);
+    const updatedRestaurant = await getRestaurantById(restaurant._id);
+    return res.status(200).json(updatedRestaurant);
   } catch (error) {
     console.error(error);
     return res.status(500).json({ error: "Internal Server Error" });

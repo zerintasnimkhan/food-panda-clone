@@ -8,6 +8,7 @@ import RestaurantContainer from './Pages/Restaurant/RestaurantContainer';
 import OrdersPage from './Pages/Restaurant/OrdersPage';
 import FoodPage from './Pages/Restaurant/FoodPage';
 import RestaurantInfo from './Pages/Restaurant/RestaurantInfo';
+import EditRestaurantPage from './Pages/Restaurant/EditRestaurantPage';
 
 function App() {
 
@@ -24,6 +25,7 @@ function App() {
           <Route path="orders" element={<OrdersPage />} />
           <Route path="food" element={<FoodPage />} />
           <Route path="info" element={<RestaurantInfo />} />
+          <Route path="edit/info" element={<EditRestaurantPage />} />
         </Route>
 
         <Route path="*" element={<Navigate to="/" />} />
