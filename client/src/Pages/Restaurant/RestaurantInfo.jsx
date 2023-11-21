@@ -25,8 +25,8 @@ return (
 
   <div className="hero p-0 bg-base-200">
   <div className="hero-content flex-col lg:flex-row">
-    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQh5ziSE6CezGt9BhvkeNhJ1CldLuoAMXfASg&usqp=CAU" 
-    className="w-5/6 rounded-lg shadow-2xl" />
+    <img src="https://img.freepik.com/free-photo/burger-hamburger-cheeseburger_505751-3690.jpg" 
+    className="w-4/6 rounded-lg shadow-2xl" />
     <div>
       <h1 className="text-7xl pb-10">Takeout</h1>
       <div className="py-6">
@@ -48,7 +48,7 @@ return (
         </ul>
       )}
     </div>
-      <button className="btn btn-primary">know more</button>
+      <button className="btn btn-primary">Edit Info</button>
     </div>
   </div>
 </div>
