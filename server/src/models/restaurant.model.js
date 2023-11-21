@@ -174,3 +174,6 @@ module.exports.getRestaurantFood = (restaurantId) => {
 
   return RestaurantModel.aggregate(pipeline);
 };
+
+
+module.exports.updateRestaurantInfoById = (id, data) => RestaurantModel.findByIdAndUpdate(id, { $set: data });
