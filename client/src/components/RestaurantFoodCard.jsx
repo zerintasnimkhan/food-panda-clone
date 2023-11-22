@@ -1,6 +1,8 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { deleteFoodFromRestaurant } from '../services/food.service';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 function RestaurantFoodCard({ item, restaurantId, handleDeletedFood }) {
 
@@ -30,8 +32,20 @@ function RestaurantFoodCard({ item, restaurantId, handleDeletedFood }) {
           {item.category.map(cat => <div key={cat._id} className="badge badge-primary badge-outline badge-md">{cat.name}</div>)}
         </div>
         <div className="card-actions justify-center">
-          <button className="btn btn-error btn-outline" onClick={() => document.getElementById('delete_modal_' + item.foodId).showModal()}>Delete</button>
-          <button className="btn btn-primary" onClick={() => navigate('/restaurant/food/edit', { state: { food: item } })}>Edit Item</button>
+          <button 
+            className="btn btn-error btn-outline" 
+            onClick={() => document.getElementById('delete_modal_' + item.foodId).showModal()}
+          >
+            <FontAwesomeIcon icon={faTrash} />
+            Delete
+          </button>
+          <button 
+            className="btn btn-primary" 
+            onClick={() => navigate('/restaurant/food/edit', { state: { food: item } })}
+          >
+            <FontAwesomeIcon icon={faEdit} />
+            Edit Item
+          </button>
         </div>
       </div>
 

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { cldUpload } from '../services/cloudinary.service';
 import { addFood } from '../services/food.service';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { faSpinner, faStopwatch } from '@fortawesome/free-solid-svg-icons';
 
 function AddFoodModal({ restaurantId, handleNewFood }) {
 
@@ -101,7 +101,7 @@ function AddFoodModal({ restaurantId, handleNewFood }) {
         </select>
       </div>
 
-      <div className="divider">PREPARE TIME (MIN)</div>
+      <div className="divider"><FontAwesomeIcon icon={faStopwatch} /> PREPARE TIME (MIN)</div>
 
       <div className='w-5/6 my-3 flex items-center justify-between'>
         <label className='w-24' htmlFor='normalTime'>Normal: </label>
