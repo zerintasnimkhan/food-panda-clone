@@ -87,7 +87,7 @@ function EditFoodPage() {
             type="text"
             placeholder="Food name"
             className="input input-bordered input-primary w-2/3 max-w-xs"
-            defaultValue={foodInfo && foodInfo.name}
+            defaultValue={foodInfo?.name}
             onChange={handleChange}
             required
           />
@@ -100,7 +100,7 @@ function EditFoodPage() {
             type="number"
             placeholder="Price"
             className="input input-bordered input-primary w-2/3 max-w-xs"
-            defaultValue={foodInfo && foodInfo.price}
+            defaultValue={foodInfo?.price}
             onChange={handleChange}
             required
           />
@@ -113,7 +113,7 @@ function EditFoodPage() {
             type="text"
             placeholder="Serving size"
             className="input input-bordered input-primary w-2/3 max-w-xs"
-            defaultValue={foodInfo && (Number(foodInfo.servingSize.split(':')[1]))}
+            defaultValue={foodInfo?.servingSize}
             onChange={handleChange}
             required
           />
@@ -121,7 +121,7 @@ function EditFoodPage() {
 
         <div className='w-5/6 my-3 flex items-center justify-between'>
           <label htmlFor='servingSize'>Package size: </label>
-          <select name="servingSize" className="select select-primary w-2/3 max-w-xs" required defaultValue={foodInfo && foodInfo.packageSize}>
+          <select name="servingSize" className="select select-primary w-2/3 max-w-xs" required defaultValue={foodInfo?.packageSize}>
             <option value="small">Small</option>
             <option value="medium">Medium</option>
             <option value="large">Large</option>
@@ -132,14 +132,14 @@ function EditFoodPage() {
 
         <div className='w-5/6 my-3 flex items-center justify-between'>
           <label className='w-24' htmlFor='normalTime'>Normal: </label>
-          <input name='normalTime' type="range" min={0} max="60" defaultValue={foodInfo && foodInfo.prepareTime.normalTime} className="range range-primary" required onChange={handleChange} />
-          <p className='ml-3'>{foodInfo && foodInfo.prepareTime.normalTime}</p>
+          <input name='normalTime' type="range" min={0} max="60" defaultValue={foodInfo?.prepareTime.normalTime} className="range range-primary" required onChange={handleChange} />
+          <p className='ml-3'>{foodInfo?.prepareTime.normalTime}</p>
         </div>
 
         <div className='w-5/6 my-3 flex items-center justify-between'>
           <label className='w-24' htmlFor='peakTime'>Peak: </label>
-          <input name='peakTime' type="range" min={0} max="60" defaultValue={foodInfo && foodInfo.prepareTime.peakTime} className="range range-primary" required onChange={handleChange} />
-          <p className='ml-3'>{foodInfo && foodInfo.prepareTime.peakTime}</p>
+          <input name='peakTime' type="range" min={0} max="60" defaultValue={foodInfo?.prepareTime.peakTime} className="range range-primary" required onChange={handleChange} />
+          <p className='ml-3'>{foodInfo?.prepareTime.peakTime}</p>
         </div>
 
         <div className="divider"></div>
@@ -147,7 +147,7 @@ function EditFoodPage() {
         <div className="w-5/6 flex justify-between items-center my-3">
           <label htmlFor='categories'>Categories: </label>
           <div>
-            {foodInfo && foodInfo.category.map(category => <div key={category._id} className="badge badge-primary badge-lg">{category.name}</div>)}
+            {foodInfo?.category.map(category => <div key={category._id} className="badge badge-primary badge-lg">{category.name}</div>)}
           </div>
           <button className='btn btn-primary btn-outline' onClick={(e) => { e.preventDefault(); document.getElementById('edit-categories-modal').showModal() }}>Edit categories</button>
         </div>
