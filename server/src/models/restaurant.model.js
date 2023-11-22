@@ -160,6 +160,7 @@ module.exports.getRestaurantFood = (restaurantId) => {
         category: "$foodInfo.category",
         prepareTime: "$foodInfo.prepareTime",
         servingSize: "$foodInfo.servingSize",
+        imageUrl: "$foodInfo.imageUrl",
       },
     },
     {

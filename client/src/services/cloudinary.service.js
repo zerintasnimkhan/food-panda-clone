@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export async function cldUpload (restaurantId, file) {
+export async function cldUpload (restaurantId, file, folder = 'restaurant') {
 
   const formData = new FormData();
   const file_name = file.name.split('.')[0];
@@ -9,6 +9,7 @@ export async function cldUpload (restaurantId, file) {
   formData.append("file", file);
   formData.append("upload_preset", import.meta.env.VITE_CLOUDINARY_PRESET);
   formData.append("public_id", public_id);
+  formData.append("folder", folder);
   
   try {
     const res = await axios.post(import.meta.env.VITE_CLOUDINARY_BASE_URL, formData);
