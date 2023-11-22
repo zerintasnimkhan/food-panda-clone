@@ -35,6 +35,11 @@ function FoodPage() {
   }
 
 
+  function handleDeletedFood (foodId) {
+    setFood(prevState => prevState.filter(item => item.foodId !== foodId));
+  }
+
+
   return (
     <div className='flex-1 flex flex-col items-center'>
       <h1 className='text-2xl font-bold my-3'>Food</h1>
@@ -44,7 +49,7 @@ function FoodPage() {
         </button>
       </div>
       <div className='flex flex-wrap items-start'>
-        {food.map(foodItem => <RestaurantFoodCard key={foodItem.foodId} item={foodItem} />)}
+        {food.map(foodItem => <RestaurantFoodCard key={foodItem.foodId} item={foodItem} handleDeletedFood={handleDeletedFood} restaurantId={restaurantId} />)}
       </div>
 
       <dialog id="add_food_modal" className="modal">

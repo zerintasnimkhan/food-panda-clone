@@ -1,4 +1,4 @@
-const { addFood, getFoodInfo } = require("../models/food.model");
+const { addFood, getFoodInfo, deleteFoodById } = require("../models/food.model");
 const {
   addRestaurant,
   getAllRestaurants,
@@ -7,6 +7,7 @@ const {
   deleteRestaurantById,
   getRestaurantByOwnerId,
   getRestaurantFood,
+  removeFoodIdFromRestaurant,
 } = require("../models/restaurant.model");
 
 module.exports.createRestaurant = async (req, res) => {
@@ -135,8 +136,28 @@ module.exports.addFoodToRestaurant = async (req, res) => {
     const newFood = await addFood(data);
     restaurant.food.push(newFood._id);
     await restaurant.save();
-    const foodInfo = await getFoodInfo(newFood._id);
-    return res.status(200).json({food: foodInfo});
+    return res.status(200).json({food: newFood});
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+module.exports.removeFoodFromRestaurant = async (req, res) => {
+  try {
+    const restaurantId = req.params.restaurantId;
+    const foodId = req.params.id;
+    const ownerId = req.user._id;
+
+    const restaurant = await getRestaurantById(restaurantId);
+    if (!restaurant || !restaurant.ownerId.equals(ownerId)) {
+      return res.status(403).json({ message: 'You are not the owner of this restaurant.'});
+    }
+
+    const deletedFood = await deleteFoodById(foodId);
+    await removeFoodIdFromRestaurant(restaurant._id, foodId);
+
+    return res.status(200).json({food: deletedFood});
   } catch (error) {
     console.error(error);
     return res.status(500).json({ error: "Internal Server Error" });

@@ -15,8 +15,8 @@ function EditFoodPage() {
   const [newImage, setNewImage] = useState();
 
   useEffect(() => {
-    if (!state || !state.food) navigate('/restaurant/food');
-    setFoodInfo(state.food);
+    if (!state?.food) navigate('/restaurant/food');
+    else setFoodInfo(state.food);
   }, [])
 
   function handleChange(e) {

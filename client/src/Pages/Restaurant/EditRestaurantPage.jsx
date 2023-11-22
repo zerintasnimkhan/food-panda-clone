@@ -17,8 +17,8 @@ function EditRestaurantPage() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!state || !state.restaurant) navigate('/restaurant/info');
-    setRestaurantInfo(state.restaurant);
+    if (!state?.restaurant) navigate('/restaurant/info');
+    else setRestaurantInfo(state.restaurant);
   }, []);
 
   function handleChange(e) {
@@ -29,7 +29,7 @@ function EditRestaurantPage() {
     }
 
     if (name === 'street' || name === 'city' || name === 'district') {
-      setRestaurantInfo(prevState => ({ ...prevState, address: { ...prevState.address, [name]: value } }));
+      setRestaurantInfo(prevState => ({ ...prevState, address: { ...prevState?.address, [name]: value } }));
     } else {
       setRestaurantInfo(prevState => ({ ...prevState, [name]: value }));
     }
@@ -134,7 +134,7 @@ function EditRestaurantPage() {
           <div className="w-5/6 flex justify-between items-center my-3">
             <label htmlFor='categories'>Categories: </label>
             <div>
-              {restaurantInfo && restaurantInfo.categories.map(category => <div key={category._id} className="badge badge-primary badge-lg">{category.name}</div>)}
+              {restaurantInfo?.categories.map(category => <div key={category._id} className="badge badge-primary badge-lg">{category.name}</div>)}
             </div>
             <button className='btn btn-primary btn-outline' onClick={(e) => { e.preventDefault(); document.getElementById('edit-categories-modal').showModal() }}>Edit categories</button>
           </div>
