@@ -52,7 +52,7 @@ module.exports.getAllFood = () => FoodModel.find();
 
 module.exports. getFoodById = (_id) => FoodModel.findById(_id);
 
-module.exports. updateFoodById = (_id) => FoodModel.findByIdAndUpdate(_id);
+module.exports.updateFoodById = (_id, data) => FoodModel.findByIdAndUpdate(_id, { $set: data });
 
 module.exports.deleteFoodById = (_id) => FoodModel.findByIdAndDelete(_id);
 

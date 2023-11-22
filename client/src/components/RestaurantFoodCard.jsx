@@ -1,8 +1,9 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function RestaurantFoodCard({ item }) {
 
-  console.log(item)
+  const navigate = useNavigate();
 
   return (
     <div className="card w-72 m-5 bg-base-100 shadow-xl">
@@ -18,7 +19,7 @@ function RestaurantFoodCard({ item }) {
         </div>
         <div className="card-actions justify-center">
           <button className="btn btn-error btn-outline">Delete</button>
-          <button className="btn btn-primary">Edit Item</button>
+          <button className="btn btn-primary" onClick={() => navigate('/restaurant/food/edit', {state: { food: item }})}>Edit Item</button>
         </div>
       </div>
     </div>

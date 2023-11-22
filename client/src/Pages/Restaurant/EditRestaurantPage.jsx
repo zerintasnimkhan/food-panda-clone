@@ -67,7 +67,7 @@ function EditRestaurantPage() {
   return (
     <div className="flex-1 flex flex-col items-center">
       <div className='w-full flex justify-start'>
-        <button className='btn btn-outline btn-primary mt-8 ml-10' onClick={() => navigate(-1)}><FontAwesomeIcon icon={faChevronLeft} style={{color: "#e00965",}} /> Back</button>
+        <button className='btn btn-outline btn-primary mt-8 ml-10' onClick={() => navigate(-1)}><FontAwesomeIcon icon={faChevronLeft} /> Back</button>
       </div>
       <h1 className='text-2xl font-bold my-3'>Edit Restaurant Info</h1>
       <div className="w-full flex">
@@ -132,7 +132,7 @@ function EditRestaurantPage() {
           </div>
 
           <div className="w-5/6 flex justify-between items-center my-3">
-            <label htmlFor='img'>Categories: </label>
+            <label htmlFor='categories'>Categories: </label>
             <div>
               {restaurantInfo && restaurantInfo.categories.map(category => <div key={category._id} className="badge badge-primary badge-lg">{category.name}</div>)}
             </div>
