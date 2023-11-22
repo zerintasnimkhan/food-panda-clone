@@ -1,7 +1,7 @@
-import React from 'react'
+import React from 'react';
 
 function RestaurantFoodCard({ item }) {
-  console.log(item)
+
   return (
     <div className="card w-72 m-5 bg-base-100 shadow-xl">
       <figure><img className='max-h-48' src={item.imageUrl ? item.imageUrl : "https://clipart-library.com/img1/1634723.png"} alt={item.name} /></figure>
