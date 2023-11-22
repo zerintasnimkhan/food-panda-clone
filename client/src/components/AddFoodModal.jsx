@@ -9,9 +9,9 @@ function AddFoodModal({ restaurantId, handleNewFood }) {
   const [name, setName] = useState('');
   const [price, setPrice] = useState(0);
   const [servingSize, setServingSize] = useState(0);
-  const [normalTime, setNoramlTime] = useState(0);
+  const [normalTime, setNormalTime] = useState(0);
   const [peakTime, setPeakTime] = useState(0);
-  const [imgFile, setImageFile] = useState(null);
+  const [imgFile, setImgFile] = useState(null);
   const [packageSize, setPackageSize] = useState('small');
   const [loading, setLoading] = useState(false);
 
@@ -105,7 +105,7 @@ function AddFoodModal({ restaurantId, handleNewFood }) {
 
       <div className='w-5/6 my-3 flex items-center justify-between'>
         <label className='w-24' htmlFor='normalTime'>Normal: </label>
-        <input name='normalTime' type="range" min={0} max="60" defaultValue={0} className="range range-primary" required onChange={(e) => setNoramlTime(e.target.value)} />
+        <input name='normalTime' type="range" min={0} max="60" defaultValue={0} className="range range-primary" required onChange={(e) => setNormalTime(e.target.value)} />
         <p className='ml-3'>{normalTime}</p>
       </div>
 
@@ -124,7 +124,7 @@ function AddFoodModal({ restaurantId, handleNewFood }) {
           type="file"
           accept="image/png, image/jpeg"
           className="file-input file-input-bordered file-input-primary w-full max-w-xs"
-          onChange={(e) => setImageFile(e.target.files[0])}
+          onChange={(e) => setImgFile(e.target.files[0])}
         />
       </div>
 

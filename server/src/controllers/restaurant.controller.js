@@ -1,4 +1,4 @@
-const { addFood } = require("../models/food.model");
+const { addFood, getFoodInfo } = require("../models/food.model");
 const {
   addRestaurant,
   getAllRestaurants,
@@ -14,8 +14,6 @@ module.exports.createRestaurant = async (req, res) => {
     console.log(req.body);
     const { name, address, location, categories, ownerId, food, peakTime } =
       req.body;
-
-    //const ownerId = "666497527f30696b59564baf";
 
     if (!name || !address || !location || !categories || !ownerId || !food) {
       return res.status(400).json();
@@ -137,7 +135,8 @@ module.exports.addFoodToRestaurant = async (req, res) => {
     const newFood = await addFood(data);
     restaurant.food.push(newFood._id);
     await restaurant.save();
-    return res.status(200).json({food: newFood});
+    const foodInfo = await getFoodInfo(newFood._id);
+    return res.status(200).json({food: foodInfo});
   } catch (error) {
     console.error(error);
     return res.status(500).json({ error: "Internal Server Error" });
