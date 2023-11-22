@@ -6,11 +6,12 @@ function RestaurantFoodCard({ item, restaurantId, handleDeletedFood }) {
 
   const navigate = useNavigate();
 
-  async function handleDelete (e) {
+  async function handleDelete(e) {
     e.preventDefault();
     try {
       const res = await deleteFoodFromRestaurant(restaurantId, item.foodId);
       handleDeletedFood(res.food._id);
+      document.getElementById('delete_modal_' + item.foodId).close()
     } catch (error) {
       console.log(error);
     }
@@ -29,10 +30,27 @@ function RestaurantFoodCard({ item, restaurantId, handleDeletedFood }) {
           {item.category.map(cat => <div key={cat._id} className="badge badge-primary badge-outline badge-md">{cat.name}</div>)}
         </div>
         <div className="card-actions justify-center">
-          <button className="btn btn-error btn-outline" onClick={handleDelete}>Delete</button>
-          <button className="btn btn-primary" onClick={() => navigate('/restaurant/food/edit', {state: { food: item }})}>Edit Item</button>
+          <button className="btn btn-error btn-outline" onClick={() => document.getElementById('delete_modal_' + item.foodId).showModal()}>Delete</button>
+          <button className="btn btn-primary" onClick={() => navigate('/restaurant/food/edit', { state: { food: item } })}>Edit Item</button>
         </div>
       </div>
+
+      <dialog id={"delete_modal_" + item.foodId} className="modal">
+        <div className="modal-box">
+          <form method="dialog">
+            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+          </form>
+          <div className="flex flex-col items-center">
+
+            <h3 className="font-bold text-lg">Delete Food</h3>
+            <p className="py-4">Are you sure you want to delete <b>{item.name}</b> from your restaurant?</p>
+            <div className='flex justify-center'>
+              <button className='btn mx-3' onClick={() => {document.getElementById('delete_modal_' + item.foodId).close()}}>Cancel</button>
+              <button className='btn btn-error text-white mx-3' onClick={handleDelete}>Delete</button>
+            </div>
+          </div>
+        </div>
+      </dialog>
     </div>
   )
 }

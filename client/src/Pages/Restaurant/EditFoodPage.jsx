@@ -53,7 +53,7 @@ function EditFoodPage() {
       const data = {
         ...foodInfo,
         ...(imageUrl ? {imageUrl}: {}),
-        servingSize: `1:${foodInfo.servingSize}`,
+        servingSize,
         category: foodInfo.category.map(cat => cat._id)
       }
       
@@ -110,7 +110,7 @@ function EditFoodPage() {
           <label htmlFor='servingSize'>Serving size: </label>
           <input
             name="servingSize"
-            type="number"
+            type="text"
             placeholder="Serving size"
             className="input input-bordered input-primary w-2/3 max-w-xs"
             defaultValue={foodInfo && (Number(foodInfo.servingSize.split(':')[1]))}

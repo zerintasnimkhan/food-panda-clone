@@ -8,7 +8,7 @@ function AddFoodModal({ restaurantId, handleNewFood }) {
 
   const [name, setName] = useState('');
   const [price, setPrice] = useState(0);
-  const [servingSize, setServingSize] = useState(0);
+  const [servingSize, setServingSize] = useState('');
   const [normalTime, setNormalTime] = useState(0);
   const [peakTime, setPeakTime] = useState(0);
   const [imgFile, setImgFile] = useState(null);
@@ -31,7 +31,7 @@ function AddFoodModal({ restaurantId, handleNewFood }) {
         const data = {
           name,
           price,
-          servingSize: `1:${servingSize}`,
+          servingSize,
           prepareTime: {
             normalTime,
             peakTime
@@ -84,7 +84,7 @@ function AddFoodModal({ restaurantId, handleNewFood }) {
         <label htmlFor='servingSize'>Serving size: </label>
         <input
           name="servingSize"
-          type="number"
+          type="text"
           placeholder="Serving size"
           className="input input-bordered input-primary w-2/3 max-w-xs"
           onChange={(e) => setServingSize(e.target.value)}
