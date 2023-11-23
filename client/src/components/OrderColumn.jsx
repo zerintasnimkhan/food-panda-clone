@@ -1,5 +1,4 @@
-// import OrderCard from './OrderCard';
-import { Droppable, Draggable } from 'react-beautiful-dnd';
+import { Draggable } from 'react-beautiful-dnd';
 import { StrictModeDroppable } from './helperComponents/StrictModeDroppable';
 import OrderCard from './OrderCard';
 
