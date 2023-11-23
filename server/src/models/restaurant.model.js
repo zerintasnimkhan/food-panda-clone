@@ -160,6 +160,7 @@ module.exports.getRestaurantFood = (restaurantId) => {
         category: "$foodInfo.category",
         prepareTime: "$foodInfo.prepareTime",
         servingSize: "$foodInfo.servingSize",
+        imageUrl: "$foodInfo.imageUrl",
       },
     },
     {
@@ -177,3 +178,4 @@ module.exports.getRestaurantFood = (restaurantId) => {
 
 
 module.exports.updateRestaurantInfoById = (id, data) => RestaurantModel.findByIdAndUpdate(id, { $set: data });
+module.exports.removeFoodIdFromRestaurant = (id, foodId) => RestaurantModel.findOneAndUpdate(id,  { $pull: { food: foodId }}, { new: true });

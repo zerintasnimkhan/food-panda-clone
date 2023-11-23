@@ -58,13 +58,10 @@ const RestaurantList = () => {
                 </div>
               </div>
 
-              <div className="my-5">
-                <b>Categories:</b>{" "}
-                {restaurants[0].categories.map((category) => (
-                  <div key={category} className="badge badge-primary">
-                    {category.name}
-                  </div>
-                ))}
+              <div className='my-5'>
+                <b>Categories:</b> {restaurants[0].categories.map(category =>
+                  <div key={category._id} className="badge badge-primary">{category.name}</div>
+                )}
               </div>
 
               <button

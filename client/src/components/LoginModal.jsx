@@ -8,8 +8,9 @@ const LoginModal = () => {
 
   const navigate = useNavigate();
 
-  const handleLogin = async () => {
+  const handleLogin = async (e) => {
     try {
+      e.preventDefault();
       const res = await login(email, password);
       const { user, token } = res;
       localStorage.setItem('access-token', token);
@@ -22,7 +23,7 @@ const LoginModal = () => {
   };
 
   return (
-      <div className="bg-white p-8 rounded-md z-20 flex flex-col items-center">
+      <form onSubmit={handleLogin} className="bg-white p-8 rounded-md z-20 flex flex-col items-center">
         <div className="mb-4 w-full">
           <label htmlFor="email" className="block text-sm font-medium text-gray-700">
             Email
@@ -48,9 +49,9 @@ const LoginModal = () => {
           />
         </div>
         <div className="flex justify-end">
-          <button className='btn btn-primary' onClick={handleLogin}>Login</button>
+          <button className='btn btn-primary' type="submit">Login</button>
         </div>
-      </div>
+      </form>
   );
 };
 
