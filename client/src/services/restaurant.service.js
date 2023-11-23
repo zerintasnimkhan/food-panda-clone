@@ -31,35 +31,47 @@ export async function OrdersForRestaurant() {
   }
 }
 
-export async function getRestaurantFood(restaurantId) {
-    try {
-      const response = await axios.get(`${baseUrl}/restaurant/${restaurantId}/foods`);
-      return response.data;
-    } catch (error) {
-      console.error('Error fetching restaurant food:', error);
-      throw new Error('Error fetching restaurant food.');
-    }
-};
+export async function getRestaurantFood() {
+  try {
+    const userRestaurant = await restaurantInfo();
+    const restaurantId = userRestaurant[0]._id;
 
+    const token = localStorage.getItem("access-token");
+    const headers = { Authorization: `Bearer ${token}` };
+
+    const response = await axios.get(
+      `${baseUrl}/restaurant/${restaurantId}/foods`,
+      { headers }
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching restaurant food:", error);
+    throw new Error("Error fetching restaurant food.");
+  }
+}
 
 export async function updateRestaurantInfo(restaurantId, data) {
   try {
     const token = localStorage.getItem("access-token");
     const headers = { Authorization: `Bearer ${token}` };
-    const response = await axios.put(`${baseUrl}/restaurant/edit/${restaurantId}`, data, { headers });
+    const response = await axios.put(
+      `${baseUrl}/restaurant/edit/${restaurantId}`,
+      data,
+      { headers }
+    );
     return response.data;
   } catch (error) {
-    console.error('Error fetching restaurant food:', error);
-    throw new Error('Error fetching restaurant food.');
+    console.error("Error fetching restaurant food:", error);
+    throw new Error("Error fetching restaurant food.");
   }
-};
+}
 
 export async function getAllCategories() {
   try {
     const response = await axios.get(`${baseUrl}/category/all`);
     return response.data;
   } catch (error) {
-    console.error('Error fetching restaurant food:', error);
-    throw new Error('Error fetching restaurant food.');
+    console.error("Error fetching restaurant food:", error);
+    throw new Error("Error fetching restaurant food.");
   }
-};
+}

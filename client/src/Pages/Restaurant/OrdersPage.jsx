@@ -40,27 +40,30 @@ const RestaurantOrders = ({ restaurantId }) => {
               <div key={order._id} className="p-4 border rounded-md shadow-md">
                 <h2 className="text-xl font-bold">Order ID: {order._id}</h2>
                 <ul>
-                <p>User ID: {order.userId}</p>
+                  <p>User ID: {order.userId}</p>
                 </ul>
                 <p>Status: {order.status}</p> <br></br>
                 <button
                   className="btn btn-active btn-primary"
                   onClick={() =>
-                    document.getElementById("viewOrder-modal" + order._id).showModal()
+                    document.getElementById("viewOrder-modal").showModal()
                   }
                 >
                   View Order
                 </button>
-                <button className="btn btn-outline btn-secondary"onClick={() =>
+                <button
+                  className="btn btn-outline btn-secondary"
+                  onClick={() =>
                     document.getElementById("rejectOrder-modal").showModal()
-                  }>
-                  Reject
+                  }
+                >
+                Cancel
                 </button>
               </div>
-              <dialog id={"viewOrder-modal" + order._id} className="modal">
+              <dialog id={"viewOrder-modal"} className="modal">
                 <div className="modal-box">
                   <h3 className="font-bold text-lg pl-7 pt-5">Order Details</h3>
-                  <ViewOrderModal order={order}/>
+                  <ViewOrderModal order={order} />
                   <div className="modal-action">
                     <form method="dialog">
                       <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
@@ -73,8 +76,10 @@ const RestaurantOrders = ({ restaurantId }) => {
 
               <dialog id={"rejectOrder-modal"} className="modal">
                 <div className="modal-box">
-                  <h3 className="text-lg pt-5 pl-5">Do you want to reject the order?</h3>
-                  <RejectOrderModal/>
+                  <h3 className="text-lg pt-5 pl-5">
+                    Do you want to reject the order?
+                  </h3>
+                  <RejectOrderModal />
                   <div className="modal-action">
                     <form method="dialog">
                       <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
