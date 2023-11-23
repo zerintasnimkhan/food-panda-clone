@@ -1,3 +1,4 @@
+const { addFood, getFoodInfo, deleteFoodById } = require("../models/food.model");
 const {
   addRestaurant,
   getAllRestaurants,
@@ -6,6 +7,7 @@ const {
   deleteRestaurantById,
   getRestaurantByOwnerId,
   getRestaurantFood,
+  removeFoodIdFromRestaurant,
 } = require("../models/restaurant.model");
 
 module.exports.createRestaurant = async (req, res) => {
@@ -13,8 +15,6 @@ module.exports.createRestaurant = async (req, res) => {
     console.log(req.body);
     const { name, address, location, categories, ownerId, food, peakTime } =
       req.body;
-
-    //const ownerId = "666497527f30696b59564baf";
 
     if (!name || !address || !location || !categories || !ownerId || !food) {
       return res.status(400).json();
@@ -116,6 +116,48 @@ module.exports.updateRestaurantById = async (req, res) => {
     await updateRestaurantInfoById(restaurantId, data);
     const updatedRestaurant = await getRestaurantById(restaurant._id);
     return res.status(200).json(updatedRestaurant);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+module.exports.addFoodToRestaurant = async (req, res) => {
+  try {
+    const restaurantId = req.params.id;
+    const data = req.body;
+    const ownerId = req.user._id;
+
+    const restaurant = await getRestaurantById(restaurantId);
+    if (!restaurant || !restaurant.ownerId.equals(ownerId)) {
+      return res.status(403).json({ message: 'You are not the owner of this restaurant.'});
+    }
+
+    const newFood = await addFood(data);
+    restaurant.food.push(newFood._id);
+    await restaurant.save();
+    return res.status(200).json({food: newFood});
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+module.exports.removeFoodFromRestaurant = async (req, res) => {
+  try {
+    const restaurantId = req.params.restaurantId;
+    const foodId = req.params.id;
+    const ownerId = req.user._id;
+
+    const restaurant = await getRestaurantById(restaurantId);
+    if (!restaurant || !restaurant.ownerId.equals(ownerId)) {
+      return res.status(403).json({ message: 'You are not the owner of this restaurant.'});
+    }
+
+    const deletedFood = await deleteFoodById(foodId);
+    await removeFoodIdFromRestaurant(restaurant._id, foodId);
+
+    return res.status(200).json({food: deletedFood});
   } catch (error) {
     console.error(error);
     return res.status(500).json({ error: "Internal Server Error" });

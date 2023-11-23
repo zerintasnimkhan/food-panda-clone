@@ -33,7 +33,7 @@ export async function OrdersForRestaurant() {
 
 export async function getRestaurantFood(restaurantId) {
     try {
-      const response = await axios.get(`${baseUrl}/${id}/foods/`);
+      const response = await axios.get(`${baseUrl}/restaurant/${restaurantId}/foods`);
       return response.data;
     } catch (error) {
       console.error('Error fetching restaurant food:', error);

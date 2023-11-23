@@ -9,6 +9,7 @@ import OrdersPage from './Pages/Restaurant/OrdersPage';
 import FoodPage from './Pages/Restaurant/FoodPage';
 import RestaurantInfo from './Pages/Restaurant/RestaurantInfo';
 import EditRestaurantPage from './Pages/Restaurant/EditRestaurantPage';
+import EditFoodPage from './Pages/Restaurant/EditFoodPage';
 
 function App() {
 
@@ -26,6 +27,7 @@ function App() {
           <Route path="food" element={<FoodPage />} />
           <Route path="info" element={<RestaurantInfo />} />
           <Route path="edit/info" element={<EditRestaurantPage />} />
+          <Route path="food/edit" element={<EditFoodPage />} />
         </Route>
 
         <Route path="*" element={<Navigate to="/" />} />

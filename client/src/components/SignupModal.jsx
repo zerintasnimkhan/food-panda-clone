@@ -6,8 +6,8 @@ const SignupModal = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSignup = async () => {
-    console.log('Signing in with:', { email, password });
+  const handleSignup = async (e) => {
+    e.preventDefault();
     try {
       const res = await signup(email, password);
       console.log(res);
@@ -17,7 +17,7 @@ const SignupModal = () => {
   };
 
   return (
-    <div className="bg-white p-8 rounded-md z-20 flex flex-col items-center">
+    <form onSubmit={handleSignup} className="bg-white p-8 rounded-md z-20 flex flex-col items-center">
       <div className="mb-4 w-full">
         <label htmlFor="userName" className="block text-sm font-medium text-gray-700">
           Name
@@ -55,9 +55,9 @@ const SignupModal = () => {
         />
       </div>
       <div className="flex justify-end">
-        <button className='btn btn-primary' onClick={handleSignup}>Sign Up</button>
+        <button className='btn btn-primary' type="submit" >Sign Up</button>
       </div>
-    </div>
+    </form>
   );
 };
 
