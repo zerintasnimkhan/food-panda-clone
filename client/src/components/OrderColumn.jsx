@@ -1,10 +1,9 @@
-import { Draggable } from 'react-beautiful-dnd';
-import { StrictModeDroppable } from './helperComponents/StrictModeDroppable';
-import OrderCard from './OrderCard';
+// import OrderCard from './OrderCard';
+import { Droppable, Draggable } from 'react-beautiful-dnd';
 
 const OrderColumn = ({ status, orders }) => {
   return (
-        <StrictModeDroppable droppableId={status}>
+        <Droppable droppableId={status}>
           {(provided) => (
             <div ref={provided.innerRef} {...provided.droppableProps} style={{ border: '1px solid #000', padding: '16px', minHeight: '200px' }}>
               <h2>{status}</h2>
@@ -17,16 +16,14 @@ const OrderColumn = ({ status, orders }) => {
                         {...provided.dragHandleProps}
                         className="border-4"
                         >
-                          <OrderCard order={order} />
+                          {order._id}
                         </div>
-
                     }
                   </Draggable>
                 ))}
-                {provided.placeholder}
           </div>
           )}
-      </StrictModeDroppable>
+      </Droppable>
   );
 };
 

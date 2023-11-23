@@ -1,10 +1,14 @@
-const OrderCard = ({ order }) => {
+import { useRef } from 'react';
+
+const OrderCard = (props) => {
+  console.log(props)
 
   return (
-    <div>
-      {order._id}
-    </div>
+    // <div ref={innerRef}>
+    //   {order._id}
+    // </div>
+    <></>
   )
-};
+  };
 
 export default OrderCard;
