@@ -1,27 +1,37 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import OrderColumn from '../../components/OrderColumn';
 import { DragDropContext } from 'react-beautiful-dnd';
+import { OrdersForRestaurant } from '../../services/restaurant.service';
 
 
 const OrdersPage = () => {
-  const [orders, setOrders] = useState([
-    { _id: "1", name: 'Order 1', status: 'pending' },
-    { _id: "2", name: 'Order 2', status: 'preparing' },
-    { _id: "3", name: 'Order 3', status: 'completed' },
-  ]);
+  const [orders, setOrders] = useState([]);
 
-  // const handleOrderDrop = (orderId, newStatus) => {
-  //   const updatedOrders = orders.map((order) => {
-  //     if (order.id === orderId) {
-  //       return { ...order, status: newStatus };
-  //     }
-  //     return order;
-  //   });
-  //   setOrders(updatedOrders);
-  // };
+
+  useEffect(() => {
+    async function getOrders () {
+      try {
+        const data = await OrdersForRestaurant();
+        setOrders(data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    getOrders();
+  }, []);
+
+  const handleDragEnd = (result) => {
+    if (!result.destination) return;
+    const id = result.draggableId;
+    const newStatus = result.destination.droppableId.toLowerCase();
+
+    // Make the request to the backend to change the status before changing the state.
+    setOrders(prevState => prevState.map(order => order._id === id ? {...order, status: newStatus} : order));
+  };
 
   return (
-    <DragDropContext>
+    <DragDropContext onDragEnd={handleDragEnd}>
     <div style={{ display: 'flex' }}>
       <OrderColumn status="Pending" orders={orders.filter((order) => order.status === 'pending')} />
       <OrderColumn status="Preparing" orders={orders.filter((order) => order.status === 'preparing')} />
