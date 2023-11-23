@@ -2,9 +2,11 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { getRestaurantFood } from "../../services/restaurant.service";
+import { Link } from "react-router-dom";
 
 function ShowFood() {
   let { id } = useParams();
+  
   const [quantity, setQuantity] = useState(1);
 
   const [foodData, setFoodData] = useState([]);
@@ -27,7 +29,7 @@ function ShowFood() {
   return (
     <>
       <div className="w-screen">
-        <div className="flex justify-start mt-12 ml-10">
+        <div className="flex justify-start gap-12 mt-12 ml-10">
           {foodData.map((food) => (
             <>
               <div
@@ -109,7 +111,9 @@ function ShowFood() {
                 </p>
                 <div>
                   <label htmlFor="quantity">
-                    <b>Select Quantity:</b>
+                    <p>
+                      <b>Select Quantity:</b>
+                    </p>
                   </label>
                   <div>
                     <button
@@ -132,6 +136,11 @@ function ShowFood() {
                   <b>Total Price: </b>
                   {selectedFood.price * quantity}$
                 </p>
+              </div>
+              <div className="modal-action">
+                <Link to="/customer/checkout">
+                  <button className="btn btn-primary">Checkout</button>
+                </Link>
               </div>
             </>
           )}

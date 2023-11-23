@@ -8,6 +8,7 @@ import OrdersPage from './Pages/Restaurant/OrdersPage';
 // import FoodPage from './Pages/Restaurant/FoodPage';
 import RestaurantInfo from './Pages/Restaurant/RestaurantInfo';
 import ShowFood from './Pages/Customer/ShowFood';
+import Checkout from './Pages/Customer/Checkout';
 
 function App() {
 
@@ -19,6 +20,7 @@ function App() {
         <Route path="/customer/" element={<CustomerContainer />}>
           <Route path="home" element={<CustomerHome />} />
           <Route path="restaurant/food/:id" element={<ShowFood />}></Route>
+          <Route path="/customer/checkout" element={<Checkout />}></Route>
         </Route>
        
         <Route path="/restaurant/" element={<RestaurantContainer />}>

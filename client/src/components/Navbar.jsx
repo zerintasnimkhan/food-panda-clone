@@ -1,9 +1,7 @@
-import React from "react";
 import LoginModal from "./LoginModal";
-import SignupModal from "./SignupModal"; 
+import SignupModal from "./SignupModal";
 
 const AppNavbar = () => {
-
   return (
     <div className="navbar bg-accent shadow-2xl">
       <div className="flex-1">
@@ -12,10 +10,20 @@ const AppNavbar = () => {
       <div className="flex-none">
         <ul className="menu menu-horizontal px-1 text-primary text-xl pr-20">
           <li>
-            <a onClick={() => document.getElementById('login-modal').showModal()}>Log in</a>
+            <a
+              onClick={() => document.getElementById("login-modal").showModal()}
+            >
+              Log in
+            </a>
           </li>
           <li>
-            <a onClick={() => document.getElementById('signup-modal').showModal()}>Sign up</a>
+            <a
+              onClick={() =>
+                document.getElementById("signup-modal").showModal()
+              }
+            >
+              Sign up
+            </a>
           </li>
           <li>
             <details>
@@ -39,7 +47,9 @@ const AppNavbar = () => {
           <LoginModal />
           <div className="modal-action">
             <form method="dialog">
-            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+              <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+                ✕
+              </button>
             </form>
           </div>
         </div>
@@ -51,7 +61,9 @@ const AppNavbar = () => {
           <SignupModal />
           <div className="modal-action">
             <form method="dialog">
-            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+              <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+                ✕
+              </button>
             </form>
           </div>
         </div>

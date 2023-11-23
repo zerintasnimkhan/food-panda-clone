@@ -37,11 +37,9 @@ function CustomerHome() {
                   <h2 className="card-title">{restaurant.name}</h2>
                   <p>
                     <b>Address: </b>
-                    {restaurant.address.street},
-                    {restaurant.address.city}
+                    {restaurant.address.street},{restaurant.address.city}
                     {/* {restaurant.address.district} */}
                   </p>
-                
 
                   <div className="card-actions justify-end">
                     <Link to={`/customer/restaurant/food/${restaurant._id}`}>
