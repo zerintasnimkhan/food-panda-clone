@@ -1,6 +1,6 @@
 import React from "react";
 import LoginModal from "./LoginModal";
-import SignupModal from "./SignupModal"; // Import your SignupModal component
+import SignupModal from "./SignupModal"; 
 
 const AppNavbar = () => {
 
@@ -33,7 +33,6 @@ const AppNavbar = () => {
         </ul>
       </div>
 
-      {/* Login Modal */}
       <dialog id="login-modal" className="modal">
         <div className="modal-box">
           <h3 className="font-bold text-lg">Login to FoodPanda</h3>
@@ -46,7 +45,6 @@ const AppNavbar = () => {
         </div>
       </dialog>
 
-      {/* Sign Up Modal */}
       <dialog id="signup-modal" className="modal">
         <div className="modal-box">
           <h3 className="font-bold text-lg">Sign Up to FoodPanda</h3>
