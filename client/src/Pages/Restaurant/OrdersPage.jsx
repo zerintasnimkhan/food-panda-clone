@@ -1,100 +1,34 @@
-import React, { useEffect, useState } from "react";
-import { OrdersForRestaurant } from "../../services/restaurant.service";
-import ViewOrderModal from "../../components/ViewOrderModal";
-import RejectOrderModal from "../../components/RejectOrderModal";
+import React, { useState } from 'react';
+import OrderColumn from '../../components/OrderColumn';
+import { DragDropContext } from 'react-beautiful-dnd';
 
-const RestaurantOrders = ({ restaurantId }) => {
-  const [orders, setOrders] = useState([]);
-  const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const fetchOrders = async () => {
-      try {
-        const ordersData = await OrdersForRestaurant(restaurantId);
-        console.log(ordersData);
-        setOrders(ordersData);
-      } catch (error) {
-        console.error("Error in RestaurantOrders:", error);
-        setError(error.message);
-      }
-    };
+const OrdersPage = () => {
+  const [orders, setOrders] = useState([
+    { _id: "1", name: 'Order 1', status: 'pending' },
+    { _id: "2", name: 'Order 2', status: 'preparing' },
+    { _id: "3", name: 'Order 3', status: 'completed' },
+  ]);
 
-    fetchOrders();
-  }, [restaurantId]);
+  // const handleOrderDrop = (orderId, newStatus) => {
+  //   const updatedOrders = orders.map((order) => {
+  //     if (order.id === orderId) {
+  //       return { ...order, status: newStatus };
+  //     }
+  //     return order;
+  //   });
+  //   setOrders(updatedOrders);
+  // };
 
   return (
-    <div>
-      <div className="text-3xl font-bold p-10">
-        <h1>Orders for your Restaurant:</h1>
-        <br />
-      </div>
-
-      {error && <p>Error: {error}</p>}
-
-      {orders.length === 0 ? (
-        <p>No orders found for this restaurant.</p>
-      ) : (
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 p-10">
-          {orders.map((order) => (
-            <>
-              <div key={order._id} className="p-4 border rounded-md shadow-md">
-                <h2 className="text-xl font-bold">Order ID: {order._id}</h2>
-                <ul>
-                  <p>User ID: {order.userId}</p>
-                </ul>
-                <p>Status: {order.status}</p> <br></br>
-                <button
-                  className="btn btn-active btn-primary"
-                  onClick={() =>
-                    document.getElementById("viewOrder-modal").showModal()
-                  }
-                >
-                  View Order
-                </button>
-                <button
-                  className="btn btn-outline btn-secondary"
-                  onClick={() =>
-                    document.getElementById("rejectOrder-modal").showModal()
-                  }
-                >
-                Cancel
-                </button>
-              </div>
-              <dialog id={"viewOrder-modal"} className="modal">
-                <div className="modal-box">
-                  <h3 className="font-bold text-lg pl-7 pt-5">Order Details</h3>
-                  <ViewOrderModal order={order} />
-                  <div className="modal-action">
-                    <form method="dialog">
-                      <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
-                        ✕
-                      </button>
-                    </form>
-                  </div>
-                </div>
-              </dialog>
-
-              <dialog id={"rejectOrder-modal"} className="modal">
-                <div className="modal-box">
-                  <h3 className="text-lg pt-5 pl-5">
-                    Do you want to reject the order?
-                  </h3>
-                  <RejectOrderModal />
-                  <div className="modal-action">
-                    <form method="dialog">
-                      <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
-                        ✕
-                      </button>
-                    </form>
-                  </div>
-                </div>
-              </dialog>
-            </>
-          ))}
-        </div>
-      )}
+    <DragDropContext>
+    <div style={{ display: 'flex' }}>
+      <OrderColumn status="Pending" orders={orders.filter((order) => order.status === 'pending')} />
+      <OrderColumn status="Preparing" orders={orders.filter((order) => order.status === 'preparing')} />
+      <OrderColumn status="Completed" orders={orders.filter((order) => order.status === 'completed')} />
     </div>
+    </DragDropContext>
   );
 };
 
-export default RestaurantOrders;
+export default OrdersPage;
