@@ -9,5 +9,6 @@ router.get("/fetch/:id", orderController.fetchOrderById);
 router.patch("/update/:id", orderController.updateOrder);
 router.delete("/remove/:id", orderController.removeOrder);
 router.get("/restaurant/:restaurantId", authMiddleware, restaurantMiddleware, orderController.fetchOrdersByRestaurant);
+router.patch("/:id/status", orderController.updateStatus);
 
 module.exports = router;

@@ -5,6 +5,7 @@ const {
   updateOrderbyId,
   deleteOrderById,
   getOrdersByRestaurantId,
+  updateOrderStatus
 } = require("../models/order.model");
 const { getRestaurantByOwnerId, getRestaurantById } = require("../models/restaurant.model");
 
@@ -112,5 +113,18 @@ module.exports.fetchOrdersByRestaurant = async (req, res) => {
   } catch (error) {
     console.error(error);
     return res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+module.exports.updateStatus = async (req, res) => {
+  const orderId = req.params.id;
+  const newStatus = req.body.status;
+
+  try {
+    await updateOrderStatus(orderId, newStatus);
+    res.json({ success: true, message: 'Status updated successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: 'Internal Server Error' });
   }
 };

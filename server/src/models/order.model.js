@@ -145,4 +145,6 @@ module.exports.getAllOrdersForUser = (userId) => OrderModel.find({ userId });
 
 module.exports.deleteOrderById = (id) => OrderModel.findByIdAndDelete(id);
 
-
+module.exports.updateOrderStatus = (orderId, newStatus) => {
+  return OrderModel.findByIdAndUpdate(orderId, { $set: { status: newStatus } });
+};
